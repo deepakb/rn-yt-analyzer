@@ -1,19 +1,19 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
     plugins: [
-      'nativewind/babel',
-      'react-native-reanimated/plugin',
-      [
-        'module-resolver',
-        {
-          root: ['./'],
-          alias: {
-            '@': './src',
-          },
+      ["module-resolver", {
+        root: ["./"],
+        alias: {
+          "@": "./src",
         },
-      ],
+      }],
+      "@babel/plugin-proposal-export-namespace-from",
+      "react-native-reanimated/plugin",
     ],
   };
 };
