@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import { RecoilRoot } from 'recoil';
 import { StatusBar } from 'expo-status-bar';
 
-export default function RootLayout() {
+export default function App() {
   return (
     <RecoilRoot>
       <StatusBar style="auto" />
@@ -20,4 +20,4 @@ export default function RootLayout() {
       </Stack>
     </RecoilRoot>
   );
-}
+} 
