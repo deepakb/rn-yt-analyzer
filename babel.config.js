@@ -4,9 +4,9 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       'nativewind/babel',
-      require.resolve('react-native-reanimated/plugin'),
+      'react-native-reanimated/plugin',
       [
-        require.resolve('babel-plugin-module-resolver'),
+        'module-resolver',
         {
           root: ['./'],
           alias: {

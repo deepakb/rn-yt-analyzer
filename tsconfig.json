@@ -8,8 +8,8 @@
     },
     "types": [
       "react-native",
-      "jest",
-      "expo-router/types"
+      "@types/jest",
+      "nativewind/types"
     ],
     "moduleResolution": "node",
     "allowJs": true,
