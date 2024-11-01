@@ -11,7 +11,9 @@
     "types": [
       "react-native",
       "@types/jest",
-      "nativewind/types"
+      "nativewind/types",
+      "expo-status-bar",
+      "recoil"
     ],
     "moduleResolution": "node",
     "allowJs": true,

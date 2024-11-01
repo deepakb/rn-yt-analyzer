@@ -1,16 +1,17 @@
 export const Colors = {
-  primary: '#4F46E5',
-  secondary: '#818CF8',
+  primary: '#1E90FF',
+  secondary: '#2C2C2C',
+  accent: '#39FF14',
   background: {
-    light: '#FFFFFF',
-    dark: '#1F2937',
+    light: '#F5F5F5',
+    dark: '#2C2C2C',
   },
   text: {
-    light: '#1F2937',
-    dark: '#F9FAFB',
+    primary: '#333333',
+    secondary: '#666666',
   },
   gradient: {
-    start: '#4F46E5',
-    end: '#818CF8',
+    start: '#1E90FF',
+    end: '#39FF14',
   },
 } as const; 
