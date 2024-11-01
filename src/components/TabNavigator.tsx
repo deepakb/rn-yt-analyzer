@@ -1,27 +1,31 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
+import HomeIcon from '../svg/home';
+import AnalysisIcon from '../svg/analysis';
+import BookmarksIcon from '../svg/bookmarks';
+import AccountIcon from '../svg/account';
 
 const tabScreens = [
     {
       name: 'index',
       title: 'Home',
-      iconName: 'home-outline',
+      Component: HomeIcon,
     },
     {
       name: 'analysis',
       title: 'Analysis',
-      iconName: 'analytics-outline',
+      Component: AnalysisIcon,
     },
     {
       name: 'bookmarks',
       title: 'Bookmarks',
-      iconName: 'bookmark-outline',
+      Component: BookmarksIcon,
     },
     {
       name: 'account',
       title: 'Account',
-      iconName: 'person-outline',
+      Component: AccountIcon,
     },
   ] as const;
 
@@ -43,15 +47,36 @@ export function TabNavigator() {
           height: 60,
           paddingBottom: Platform.OS === 'android' ? 10 : 20,
         },
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
       }}>
-      {tabScreens.map(({ name, title, iconName }) => (
+      {tabScreens.map(({ name, title, Component }) => (
         <Tabs.Screen
           key={name}
           name={name}
           options={{
             title,
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name={iconName} size={size} color={color} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <Component 
+                title={title} 
+                width={24} 
+                height={24} 
+                fill={focused ? '#1E90FF' : '#000'} 
+                // opacity={focused ? 1 : 0.8}
+              />
+            ),
+            tabBarLabel: ({ focused, color }) => (
+              <Text 
+                style={{ 
+                  color,
+                  fontSize: 12,
+                  fontWeight: focused ? '700' : '400',
+                  marginTop: -5
+                }}
+              >
+                {title}
+              </Text>
             ),
           }}
         />
