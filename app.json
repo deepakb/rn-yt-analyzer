@@ -30,7 +30,7 @@
       "androidStatusBar": {
         "translucent": true,
         "backgroundColor": "transparent",
-        "barStyle": "dark-content"
+        "barStyle": "light-content"
       }
     },
     "web": {

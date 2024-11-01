@@ -1,3 +1,4 @@
+import '../global.css';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -7,16 +8,6 @@ import { useEffect } from 'react';
 import * as NavigationBar from 'expo-navigation-bar';
 
 export default function TabLayout() {
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      // Configure navigation bar
-      NavigationBar.setPositionAsync('absolute');
-      NavigationBar.setVisibilityAsync('hidden');
-      NavigationBar.setBehaviorAsync('overlay-swipe');
-      NavigationBar.setBackgroundColorAsync('transparent');
-    }
-  }, []);
-
   return (
     <SafeAreaProvider>
       <View style={{ flex: 1 }}>
