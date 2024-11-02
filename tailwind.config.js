@@ -12,7 +12,12 @@ module.exports = {
         background: {
           light: '#F5F5F5',
         },
-        // ... other colors from your Colors constant
+      },
+      fontFamily: {
+        'inter-regular': ['Inter_400Regular'],
+        'inter-medium': ['Inter_500Medium'],
+        'inter-semibold': ['Inter_600SemiBold'],
+        'inter-bold': ['Inter_700Bold'],
       },
     },
   },

@@ -1,31 +1,39 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { Platform, Text } from 'react-native';
-import HomeIcon from '../svg/home';
-import AnalysisIcon from '../svg/analysis';
-import BookmarksIcon from '../svg/bookmarks';
-import AccountIcon from '../svg/account';
+import { Ionicons } from '@expo/vector-icons';
 
 const tabScreens = [
     {
       name: 'index',
       title: 'Home',
-      Component: HomeIcon,
+      icon: {
+        focused: 'home',
+        unfocused: 'home-outline'
+      },
     },
     {
       name: 'analysis',
       title: 'Analysis',
-      Component: AnalysisIcon,
+      icon: {
+        focused: 'analytics',
+        unfocused: 'analytics-outline'
+      },
     },
     {
       name: 'bookmarks',
       title: 'Bookmarks',
-      Component: BookmarksIcon,
+      icon: {
+        focused: 'bookmark',
+        unfocused: 'bookmark-outline'
+      },
     },
     {
       name: 'account',
       title: 'Account',
-      Component: AccountIcon,
+      icon: {
+        focused: 'person',
+        unfocused: 'person-outline'
+      },
     },
   ] as const;
 
@@ -49,29 +57,27 @@ export function TabNavigator() {
         },
         tabBarLabelStyle: {
           fontSize: 12,
+          fontFamily: 'Inter_500Medium',
         },
       }}>
-      {tabScreens.map(({ name, title, Component }) => (
+      {tabScreens.map(({ name, title, icon }) => (
         <Tabs.Screen
           key={name}
           name={name}
           options={{
             title,
             tabBarIcon: ({ color, size, focused }) => (
-              <Component 
-                title={title} 
-                width={24} 
-                height={24} 
-                fill={focused ? '#1E90FF' : '#000'} 
-                // opacity={focused ? 1 : 0.8}
+              <Ionicons 
+                name={focused ? icon.focused : icon.unfocused}
+                size={24} 
+                color={color}
               />
             ),
             tabBarLabel: ({ focused, color }) => (
               <Text 
+                className={`text-xs ${focused ? 'font-inter-bold' : 'font-inter-medium'}`}
                 style={{ 
                   color,
-                  fontSize: 12,
-                  fontWeight: focused ? '700' : '400',
                   marginTop: -5
                 }}
               >
