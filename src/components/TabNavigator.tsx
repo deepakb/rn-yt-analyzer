@@ -63,11 +63,11 @@ export function TabNavigator() {
           //paddingBottom: Platform.OS === 'ios' ? 30 : 10,
         },
         tabBarItemStyle: {
-          // height: 50,
-          // paddingTop: 8,
+          height: 50,
+          paddingBottom: 8,
         },
         tabBarIconStyle: {
-          // marginBottom: 4,
+          //marginBottom: 4,
         },
         tabBarLabelStyle: {
           fontSize: 12,
