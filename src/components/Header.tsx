@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
+import { GradientText } from '@/components/GradientText';
+import { OrbitLogo } from '@/components/OrbitLogo';
+import { GradientIcon } from '@/components/GradientIcon';
 
 interface HeaderProps {
   onNotificationPress?: () => void;
@@ -13,10 +15,14 @@ export function Header({ onNotificationPress }: HeaderProps) {
     <View className={`flex-row items-center justify-between px-4 h-14 ${isDark ? 'bg-background-dark' : 'bg-background'}`}>
       {/* Left side - Logo and Title */}
       <View className="flex-row items-center">
-        <View className="w-8 h-8 bg-primary rounded-full mr-2" />
-        <Text className={`text-xl font-inter-bold ${isDark ? 'text-text-dark' : 'text-text'}`}>
-          Orbit
-        </Text>
+        <OrbitLogo />
+        <View className="ml-2">
+          <GradientText
+            text="Orbit"
+            variant="custom"
+            className="text-xl font-inter-bold"
+          />
+        </View>
       </View>
 
       {/* Right side - Theme and Notification icons */}
@@ -25,10 +31,10 @@ export function Header({ onNotificationPress }: HeaderProps) {
           onPress={toggleTheme}
           className="p-2"
         >
-          <Ionicons 
+          <GradientIcon
             name={isDark ? 'sunny-outline' : 'moon-outline'}
-            size={24} 
-            color={isDark ? '#F3F4F6' : '#4B5563'}
+            size={24}
+            variant="ocean"
           />
         </TouchableOpacity>
 
@@ -36,10 +42,10 @@ export function Header({ onNotificationPress }: HeaderProps) {
           onPress={onNotificationPress}
           className="p-2"
         >
-          <Ionicons 
-            name="notifications-outline" 
-            size={24} 
-            color={isDark ? '#F3F4F6' : '#4B5563'}
+          <GradientIcon
+            name="notifications-outline"
+            size={24}
+            variant="ocean"
           />
         </TouchableOpacity>
       </View>

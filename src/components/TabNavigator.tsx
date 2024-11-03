@@ -2,41 +2,48 @@ import { Tabs } from 'expo-router';
 import { Platform, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/contexts/ThemeContext';
+import { GradientIcon } from './GradientIcon';
+import { GradientText } from './GradientText';
+import { gradientColors } from '@/constants/gradients';
 
 const tabScreens = [
-    {
-      name: 'index',
-      title: 'Home',
-      icon: {
-        focused: 'home',
-        unfocused: 'home-outline'
-      },
+  {
+    name: 'index',
+    title: 'Home',
+    icon: {
+      focused: 'home',
+      unfocused: 'home-outline'
     },
-    {
-      name: 'analysis',
-      title: 'Analysis',
-      icon: {
-        focused: 'analytics',
-        unfocused: 'analytics-outline'
-      },
+    gradient: 'custom' as const
+  },
+  {
+    name: 'analysis',
+    title: 'Analysis',
+    icon: {
+      focused: 'analytics',
+      unfocused: 'analytics-outline'
     },
-    {
-      name: 'bookmarks',
-      title: 'Bookmarks',
-      icon: {
-        focused: 'bookmark',
-        unfocused: 'bookmark-outline'
-      },
+    gradient: 'custom' as const
+  },
+  {
+    name: 'bookmarks',
+    title: 'Bookmarks',
+    icon: {
+      focused: 'bookmark',
+      unfocused: 'bookmark-outline'
     },
-    {
-      name: 'account',
-      title: 'Account',
-      icon: {
-        focused: 'person',
-        unfocused: 'person-outline'
-      },
+    gradient: 'custom' as const
+  },
+  {
+    name: 'account',
+    title: 'Account',
+    icon: {
+      focused: 'person',
+      unfocused: 'person-outline'
     },
-  ] as const;
+    gradient: 'custom' as const
+  },
+] as const;
 
 export function TabNavigator() {
   const { isDark } = useTheme();
@@ -44,59 +51,54 @@ export function TabNavigator() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#1E90FF',
-        tabBarInactiveTintColor: isDark ? '#9CA3AF' : 'gray',
         headerShown: false,
         tabBarStyle: {
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: isDark ? 'bg-background-dark' : 'bg-background',
+          backgroundColor: isDark ? '#121212' : '#FFFFFF',
           borderTopWidth: 0,
           elevation: 0,
-          //height: 60,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: 10,
-          //paddingBottom: Platform.OS === 'ios' ? 30 : 10,
+          height: Platform.OS === 'ios' ? 85 : 60,
+          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
         },
         tabBarItemStyle: {
           height: 50,
           paddingBottom: 8,
         },
-        tabBarIconStyle: {
-          //marginBottom: 4,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontFamily: 'Inter_500Medium',
-          lineHeight: 16,
-        },
       }}>
-      {tabScreens.map(({ name, title, icon }) => (
+      {tabScreens.map(({ name, title, icon, gradient }) => (
         <Tabs.Screen
           key={name}
           name={name}
           options={{
             title,
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons 
-                name={focused ? icon.focused : icon.unfocused}
-                size={24} 
-                color={color}
-              />
+            tabBarIcon: ({ focused }) => (
+              focused ? (
+                <GradientIcon
+                  name={icon.focused}
+                  size={24}
+                  variant={gradient}
+                />
+              ) : (
+                <GradientIcon
+                  name={icon.unfocused}
+                  size={24}
+                  variant={isDark ? 'inactiveDark' : 'inactive'}
+                />
+              )
             ),
-            tabBarLabel: ({ focused, color }) => (
-              <Text 
-                className={`text-xs ${focused ? 'font-inter-bold' : 'font-inter-medium'}`}
-                style={{ 
-                  color,
-                }}
-              >
-                {title}
-              </Text>
+            tabBarLabel: ({ focused }) => (
+              focused ? (
+                <GradientText
+                  text={title}
+                  variant={gradient}
+                  className="text-xs font-inter-bold"
+                />
+              ) : (
+                <GradientText
+                  text={title}
+                  variant={isDark ? 'inactiveDark' : 'inactive'}
+                  className="text-xs font-inter-medium"
+                />
+              )
             ),
           }}
         />
