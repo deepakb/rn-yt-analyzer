@@ -1,40 +1,72 @@
 import '../global.css';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
-import { TabNavigator } from '../src/components/TabNavigator';
 import { useLoadFonts } from '@/hooks/useLoadFonts';
 import { useEffect } from 'react';
+import { Stack } from 'expo-router';
+import { Header } from '@/components/Header';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 // Keep splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
 
-export default function TabLayout() {
+// Create a themed container component
+function ThemedContainer({ children }: { children: React.ReactNode }) {
+  const { isDark } = useTheme();
+  
+  return (
+    <SafeAreaProvider>
+      <StatusBar 
+        style={isDark ? 'light' : 'dark'}
+        backgroundColor="transparent" 
+        translucent={true} 
+      />
+      <SafeAreaView 
+        className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`} 
+        edges={['top']}
+      >
+        {children}
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+
+export default function RootLayout() {
   const { fontsLoaded, fontError } = useLoadFonts();
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
-      // Hide splash screen once fonts are loaded or if there's an error
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
 
-  // Don't render anything until fonts are loaded
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <SafeAreaProvider>
-      <View style={{ flex: 1 }}>
-        <StatusBar 
-          style="dark" 
-          backgroundColor="transparent" 
-          translucent={true} 
-        />
-        <TabNavigator />
-      </View>
-    </SafeAreaProvider>
+    <ThemeProvider>
+      <ThemedContainer>
+        <Stack
+          screenOptions={{
+            header: () => (
+              <Header 
+                onNotificationPress={() => console.log('Notification pressed')}
+              />
+            ),
+          }}
+        >
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: true,
+            }}
+          />
+        </Stack>
+      </ThemedContainer>
+    </ThemeProvider>
   );
 }

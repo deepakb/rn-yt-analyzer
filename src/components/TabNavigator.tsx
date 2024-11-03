@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Platform, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const tabScreens = [
     {
@@ -38,26 +39,40 @@ const tabScreens = [
   ] as const;
 
 export function TabNavigator() {
+  const { isDark } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: '#1E90FF',
-        tabBarInactiveTintColor: 'gray',
+        tabBarInactiveTintColor: isDark ? '#9CA3AF' : 'gray',
         headerShown: false,
         tabBarStyle: {
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: 'white',
+          backgroundColor: isDark ? 'bg-background-dark' : 'bg-background',
           borderTopWidth: 0,
           elevation: 0,
-          height: 60,
-          paddingBottom: Platform.OS === 'android' ? 10 : 20,
+          //height: 60,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 10,
+          //paddingBottom: Platform.OS === 'ios' ? 30 : 10,
+        },
+        tabBarItemStyle: {
+          // height: 50,
+          // paddingTop: 8,
+        },
+        tabBarIconStyle: {
+          // marginBottom: 4,
         },
         tabBarLabelStyle: {
           fontSize: 12,
           fontFamily: 'Inter_500Medium',
+          lineHeight: 16,
         },
       }}>
       {tabScreens.map(({ name, title, icon }) => (
@@ -66,7 +81,7 @@ export function TabNavigator() {
           name={name}
           options={{
             title,
-            tabBarIcon: ({ color, size, focused }) => (
+            tabBarIcon: ({ color, focused }) => (
               <Ionicons 
                 name={focused ? icon.focused : icon.unfocused}
                 size={24} 
@@ -78,7 +93,6 @@ export function TabNavigator() {
                 className={`text-xs ${focused ? 'font-inter-bold' : 'font-inter-medium'}`}
                 style={{ 
                   color,
-                  marginTop: -5
                 }}
               >
                 {title}
