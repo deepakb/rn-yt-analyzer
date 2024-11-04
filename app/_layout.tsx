@@ -2,13 +2,13 @@ import '../global.css';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { View } from 'react-native';
 import { useLoadFonts } from '@/hooks/useLoadFonts';
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { Header } from '@/components/Header';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Keep splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
@@ -50,22 +50,26 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <ThemedContainer>
-        <Stack
-          screenOptions={{
-            header: () => (
-              <Header 
-                onNotificationPress={() => console.log('Notification pressed')}
-              />
-            ),
-          }}
+        <NavigationContainer
+          independent={true} // Important for Expo Router
         >
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              headerShown: true,
+          <Stack
+            screenOptions={{
+              header: () => (
+                <Header 
+                  onNotificationPress={() => console.log('Notification pressed')}
+                />
+              ),
             }}
-          />
-        </Stack>
+          >
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: true,
+              }}
+            />
+          </Stack>
+        </NavigationContainer>
       </ThemedContainer>
     </ThemeProvider>
   );

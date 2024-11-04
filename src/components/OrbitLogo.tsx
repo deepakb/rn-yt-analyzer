@@ -2,30 +2,31 @@ import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
-import { gradientColors } from '@/constants/gradients';
+import { useTheme } from '@/contexts/ThemeContext';
+import { gradients } from '@/types/gradient';
 
 export function OrbitLogo() {
+  const { isDark } = useTheme();
+  
+  // Use the secondary gradient preset (or any other preset you prefer)
+  const gradientConfig = gradients.secondary;
+
   return (
     <MaskedView
       maskElement={
         <View className="w-8 h-8 items-center justify-center">
-          <Ionicons name="planet" size={24} />
+          <Ionicons 
+            name="planet" 
+            size={24} 
+            color="black"
+          />
         </View>
       }
     >
       <LinearGradient
-        colors={gradientColors.custom}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        className="w-8 h-8"
-      >
-        <View className="w-8 h-8 opacity-0 items-center justify-center">
-          {/* Outer circle */}
-          <View className="absolute w-8 h-8 rounded-full border-[2.5px]" />
-          {/* Planet icon */}
-          <Ionicons name="planet" size={24} />
-        </View>
-      </LinearGradient>
+        {...gradientConfig}
+        className="w-8 h-8 animate-gradient-x"
+      />
     </MaskedView>
   );
 }

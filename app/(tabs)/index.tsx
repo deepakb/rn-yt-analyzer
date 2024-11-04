@@ -1,7 +1,22 @@
 import { View, Text } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { GradientBackground } from '@/components/GradientBackground';
-import { GradientText } from '@/components/GradientText';
+import { GradientBackground, GradientText } from '@/components/ui';
+
+// Predefined gradients for demonstration
+const gradients = {
+  sunset: {
+    colors: ['#FF512F', '#DD2476'],
+  },
+  ocean: {
+    colors: ['#2193b0', '#6dd5ed'],
+  },
+  fire: {
+    colors: ['#FFB75E', '#ED8F03', '#EA384D'],
+  },
+  custom: {
+    colors: ['#FF0080', '#7928CA'],
+  },
+};
 
 export default function HomeScreen() {
   const { isDark } = useTheme();
@@ -20,55 +35,71 @@ export default function HomeScreen() {
       {/* Gradient Texts */}
       <View className="space-y-4 mb-8">
         <GradientText 
-          text="Sunset Gradient"
-          variant="sunset"
+          gradient={gradients.sunset}
           className="text-2xl font-inter-semibold"
-        />
+        >
+          Sunset Gradient
+        </GradientText>
 
         <GradientText 
-          text="Ocean Gradient"
-          variant="ocean"
+          gradient={gradients.ocean}
           className="text-2xl font-inter-semibold"
-        />
+        >
+          Ocean Gradient
+        </GradientText>
 
         <GradientText 
-          text="Fire Gradient"
-          variant="fire"
+          gradient={gradients.fire}
           className="text-2xl font-inter-semibold"
-        />
+        >
+          Fire Gradient
+        </GradientText>
 
         <GradientText 
-          text="Custom Gradient"
-          variant="custom"
+          gradient={gradients.custom}
           className="text-2xl font-inter-semibold"
-        />
+        >
+          Custom Gradient
+        </GradientText>
       </View>
 
       {/* Gradient Backgrounds */}
       <View className="space-y-4 w-full px-4">
         <GradientBackground 
-          text="Sunset Background"
-          variant="sunset"
-          className="text-2xl font-inter-semibold"
-        />
+          gradient={gradients.sunset}
+          className="px-4 py-2"
+        >
+          <Text className="text-2xl font-inter-semibold text-white">
+            Sunset Background
+          </Text>
+        </GradientBackground>
 
         <GradientBackground 
-          text="Ocean Background"
-          variant="ocean"
-          className="text-2xl font-inter-semibold"
-        />
+          gradient={gradients.ocean}
+          className="px-4 py-2"
+        >
+          <Text className="text-2xl font-inter-semibold text-white">
+            Ocean Background
+          </Text>
+        </GradientBackground>
 
         <GradientBackground 
-          text="Fire Background"
-          variant="fire"
-          className="text-2xl font-inter-semibold"
-        />
+          gradient={gradients.fire}
+          className="px-4 py-2"
+        >
+          <Text className="text-2xl font-inter-semibold text-white">
+            Fire Background
+          </Text>
+        </GradientBackground>
 
         <GradientBackground 
-          text="Custom Background"
-          variant="custom"
-          className="text-2xl font-inter-semibold"
-        />
+          gradient={gradients.custom}
+          className="px-4 py-2"
+        >
+          <Text className="text-2xl font-inter-semibold text-white">
+            Custom Background
+          </Text>
+        </GradientBackground>
       </View>
     </View>
   );

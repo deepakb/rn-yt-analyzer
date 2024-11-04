@@ -1,10 +1,8 @@
 import { Tabs } from 'expo-router';
-import { Platform, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { GradientIcon } from './GradientIcon';
-import { GradientText } from './GradientText';
-import { gradientColors } from '@/constants/gradients';
+import { GradientText, GradientIcon } from '@/components/ui';
+import { GradientConfig } from '@/types/gradient';
 
 const tabScreens = [
   {
@@ -14,7 +12,7 @@ const tabScreens = [
       focused: 'home',
       unfocused: 'home-outline'
     },
-    gradient: 'custom' as const
+    gradient: 'primary' as const
   },
   {
     name: 'analysis',
@@ -23,7 +21,7 @@ const tabScreens = [
       focused: 'analytics',
       unfocused: 'analytics-outline'
     },
-    gradient: 'custom' as const
+    gradient: 'primary' as const
   },
   {
     name: 'bookmarks',
@@ -32,7 +30,7 @@ const tabScreens = [
       focused: 'bookmark',
       unfocused: 'bookmark-outline'
     },
-    gradient: 'custom' as const
+    gradient: 'primary' as const
   },
   {
     name: 'account',
@@ -41,20 +39,32 @@ const tabScreens = [
       focused: 'person',
       unfocused: 'person-outline'
     },
-    gradient: 'custom' as const
+    gradient: 'primary' as const
   },
 ] as const;
 
+// Helper function to create muted gradient config
+const createMutedGradient = (isDark: boolean): GradientConfig => ({
+  colors: [
+    isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
+    isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)'
+  ],
+  start: { x: 0, y: 0 },
+  end: { x: 1, y: 1 }
+});
+
 export function TabNavigator() {
   const { isDark } = useTheme();
+  const mutedGradient = createMutedGradient(isDark);
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: isDark ? '#121212' : '#FFFFFF',
-          borderTopWidth: 0,
+          backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
+          borderTopWidth: 1,
+          borderTopColor: isDark ? 'rgb(55, 65, 81)' : 'rgb(229, 231, 235)',
           elevation: 0,
           height: Platform.OS === 'ios' ? 85 : 60,
           paddingBottom: Platform.OS === 'ios' ? 20 : 10,
@@ -63,6 +73,8 @@ export function TabNavigator() {
           height: 50,
           paddingBottom: 8,
         },
+        tabBarActiveTintColor: '#1E90FF',
+        tabBarInactiveTintColor: isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
       }}>
       {tabScreens.map(({ name, title, icon, gradient }) => (
         <Tabs.Screen
@@ -71,34 +83,22 @@ export function TabNavigator() {
           options={{
             title,
             tabBarIcon: ({ focused }) => (
-              focused ? (
-                <GradientIcon
-                  name={icon.focused}
-                  size={24}
-                  variant={gradient}
-                />
-              ) : (
-                <GradientIcon
-                  name={icon.unfocused}
-                  size={24}
-                  variant={isDark ? 'inactiveDark' : 'inactive'}
-                />
-              )
+              <GradientIcon
+                name={focused ? icon.focused : icon.unfocused}
+                size="md"
+                gradient={focused ? gradient : mutedGradient}
+                className="animate-fade-in"
+              />
             ),
             tabBarLabel: ({ focused }) => (
-              focused ? (
-                <GradientText
-                  text={title}
-                  variant={gradient}
-                  className="text-xs font-inter-bold"
-                />
-              ) : (
-                <GradientText
-                  text={title}
-                  variant={isDark ? 'inactiveDark' : 'inactive'}
-                  className="text-xs font-inter-medium"
-                />
-              )
+              <GradientText
+                gradient={focused ? gradient : mutedGradient}
+                variant={focused ? 'body-sm' : 'body-xs'}
+                weight={focused ? 'medium' : 'regular'}
+                className="animate-fade-in"
+              >
+                {title}
+              </GradientText>
             ),
           }}
         />
