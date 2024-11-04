@@ -67,11 +67,13 @@ export function TabNavigator() {
           borderTopColor: isDark ? 'rgb(55, 65, 81)' : 'rgb(229, 231, 235)',
           elevation: 0,
           height: Platform.OS === 'ios' ? 85 : 60,
-          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+          paddingBottom: Platform.OS === 'ios' ? 25 : 10,
         },
         tabBarItemStyle: {
-          height: 50,
-          paddingBottom: 8,
+          paddingTop: 10,
+          height: Platform.OS === 'ios' ? 60 : 50,
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         tabBarActiveTintColor: '#1E90FF',
         tabBarInactiveTintColor: isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
@@ -87,7 +89,7 @@ export function TabNavigator() {
                 name={focused ? icon.focused : icon.unfocused}
                 size="md"
                 gradient={focused ? gradient : mutedGradient}
-                className="animate-fade-in"
+                className="transition-opacity duration-200"
               />
             ),
             tabBarLabel: ({ focused }) => (
@@ -95,7 +97,7 @@ export function TabNavigator() {
                 gradient={focused ? gradient : mutedGradient}
                 variant={focused ? 'body-sm' : 'body-xs'}
                 weight={focused ? 'medium' : 'regular'}
-                className="animate-fade-in"
+                className="transition-opacity duration-200"
               >
                 {title}
               </GradientText>

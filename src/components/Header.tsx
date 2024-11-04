@@ -40,7 +40,7 @@ export function Header({ onNotificationPress }: HeaderProps) {
           weight="bold"
           className="animate-gradient-x"
         >
-          Orbit
+          Design System
         </GradientText>
       </View>
 

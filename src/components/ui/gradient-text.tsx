@@ -27,7 +27,6 @@ export function GradientText({
   className = '',
   ...props 
 }: GradientTextProps) {
-  // Handle gradient preset or custom config
   const gradientConfig = typeof gradient === 'string' 
     ? gradients[gradient] 
     : gradient;
@@ -39,12 +38,32 @@ export function GradientText({
     className
   ].join(' ');
 
+  const variantSizes = {
+    'display-2xl': 72,
+    'display-xl': 60,
+    'display-lg': 48,
+    'display-md': 36,
+    'display-sm': 30,
+    'display-xs': 24,
+    'body-xl': 20,
+    'body-lg': 18,
+    'body-md': 16,
+    'body-sm': 14,
+    'body-xs': 12,
+  } as const;
+
+  const fontSize = variantSizes[variant];
+
   return (
     <MaskedView
       maskElement={
         <RNText 
           className={baseClasses}
-          style={{ backgroundColor: 'transparent' }}
+          style={{ 
+            backgroundColor: 'transparent',
+            fontSize,
+            lineHeight: fontSize * 1.5,
+          }}
           {...props}
         >
           {children}
@@ -60,7 +79,11 @@ export function GradientText({
       >
         <RNText 
           className={baseClasses}
-          style={{ opacity: 0 }} 
+          style={{ 
+            opacity: 0,
+            fontSize,
+            lineHeight: fontSize * 1.5,
+          }} 
           {...props}
         >
           {children}
