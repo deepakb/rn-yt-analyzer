@@ -9,6 +9,7 @@ import { Header } from '@/components/Header';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { NavigationContainer } from '@react-navigation/native';
+import { View } from 'react-native';
 
 // Keep splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
@@ -51,7 +52,7 @@ export default function RootLayout() {
     <ThemeProvider>
       <ThemedContainer>
         <NavigationContainer
-          independent={true} // Important for Expo Router
+          independent={true}
         >
           <Stack
             screenOptions={{
@@ -60,6 +61,11 @@ export default function RootLayout() {
                   onNotificationPress={() => console.log('Notification pressed')}
                 />
               ),
+              headerShown: true,
+              contentStyle: {
+                paddingBottom: 0,
+              },
+              animation: 'slide_from_right',
             }}
           >
             <Stack.Screen

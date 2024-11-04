@@ -1,106 +1,110 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { GradientBackground, GradientText } from '@/components/ui';
+import { GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 
-// Predefined gradients for demonstration
-const gradients = {
-  sunset: {
-    colors: ['#FF512F', '#DD2476'],
-  },
-  ocean: {
-    colors: ['#2193b0', '#6dd5ed'],
-  },
-  fire: {
-    colors: ['#FFB75E', '#ED8F03', '#EA384D'],
-  },
-  custom: {
-    colors: ['#FF0080', '#7928CA'],
-  },
-};
+// Add this helper component for color circles
+function ColorCircle({ 
+  gradient, 
+  label, 
+  isGradient = false 
+}: { 
+  gradient: GradientPreset, 
+  label: string, 
+  isGradient?: boolean 
+}) {
+  return (
+    <View className="items-center">
+      {isGradient ? (
+        <GradientBackground
+          gradient={gradient}
+          className="w-16 h-16 rounded-full"
+        />
+      ) : (
+        <View 
+          className={[
+            'w-16 h-16 rounded-full',
+            gradient === 'primary' && 'bg-primary',
+            gradient === 'success' && 'bg-success',
+            gradient === 'warning' && 'bg-warning',
+            gradient === 'error' && 'bg-error',
+          ].filter(Boolean).join(' ')}
+        />
+      )}
+      <Text className="text-body-xs font-inter-medium mt-2 text-text dark:text-text-dark">
+        {label}
+      </Text>
+    </View>
+  );
+}
 
-export default function HomeScreen() {
+export default function DesignSystemShowcase() {
+  const { isDark } = useTheme();
+
+  return (
+    <ScrollView 
+      className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`}
+      contentContainerClassName="pb-32"
+      showsVerticalScrollIndicator={true}
+    >
+      <View className="px-4 py-6">
+        {/* Typography Section */}
+        <SectionTitle>Typography</SectionTitle>
+        <View className="space-y-4 mb-8">
+          <GradientText 
+            gradient="primary"
+            variant="display-2xl"
+            weight="bold"
+          >
+            2XL
+          </GradientText>
+          
+          <GradientText 
+            gradient="secondary"
+            variant="display-lg"
+            weight="semibold"
+          >
+            LG
+          </GradientText>
+
+          <Text className={`text-body-lg font-inter-regular ${
+            isDark ? 'text-text-dark' : 'text-text'
+          }`}>
+            Regular Body Text LG
+          </Text>
+        </View>
+
+        {/* Gradients Section */}
+        <SectionTitle>Gradients</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          <ColorCircle gradient="primary" label="Primary" isGradient />
+          <ColorCircle gradient="secondary" label="Secondary" isGradient />
+          <ColorCircle gradient="success" label="Success" isGradient />
+          <ColorCircle gradient="warning" label="Warning" isGradient />
+        </View>
+
+        {/* Colors Section */}
+        <SectionTitle>Colors</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          <ColorCircle gradient="primary" label="Primary" />
+          <ColorCircle gradient="success" label="Success" />
+          <ColorCircle gradient="warning" label="Warning" />
+          <ColorCircle gradient="error" label="Error" />
+        </View>
+
+        
+      </View>
+    </ScrollView>
+  );
+}
+
+function SectionTitle({ children }: { children: string }) {
   const { isDark } = useTheme();
   
   return (
-    <View className={`flex-1 items-center justify-center ${isDark ? 'bg-background-dark' : 'bg-background'}`}>
-      {/* Regular text */}
-      <Text 
-        className={`text-3xl font-inter-bold mb-8 ${
-          isDark ? 'text-text-dark' : 'text-text'
-        }`}
-      >
-        Hello World!
-      </Text>
-
-      {/* Gradient Texts */}
-      <View className="space-y-4 mb-8">
-        <GradientText 
-          gradient={gradients.sunset}
-          className="text-2xl font-inter-semibold"
-        >
-          Sunset Gradient
-        </GradientText>
-
-        <GradientText 
-          gradient={gradients.ocean}
-          className="text-2xl font-inter-semibold"
-        >
-          Ocean Gradient
-        </GradientText>
-
-        <GradientText 
-          gradient={gradients.fire}
-          className="text-2xl font-inter-semibold"
-        >
-          Fire Gradient
-        </GradientText>
-
-        <GradientText 
-          gradient={gradients.custom}
-          className="text-2xl font-inter-semibold"
-        >
-          Custom Gradient
-        </GradientText>
-      </View>
-
-      {/* Gradient Backgrounds */}
-      <View className="space-y-4 w-full px-4">
-        <GradientBackground 
-          gradient={gradients.sunset}
-          className="px-4 py-2"
-        >
-          <Text className="text-2xl font-inter-semibold text-white">
-            Sunset Background
-          </Text>
-        </GradientBackground>
-
-        <GradientBackground 
-          gradient={gradients.ocean}
-          className="px-4 py-2"
-        >
-          <Text className="text-2xl font-inter-semibold text-white">
-            Ocean Background
-          </Text>
-        </GradientBackground>
-
-        <GradientBackground 
-          gradient={gradients.fire}
-          className="px-4 py-2"
-        >
-          <Text className="text-2xl font-inter-semibold text-white">
-            Fire Background
-          </Text>
-        </GradientBackground>
-
-        <GradientBackground 
-          gradient={gradients.custom}
-          className="px-4 py-2"
-        >
-          <Text className="text-2xl font-inter-semibold text-white">
-            Custom Background
-          </Text>
-        </GradientBackground>
-      </View>
-    </View>
+    <Text className={`text-2xl font-inter-bold mb-4 ${
+      isDark ? 'text-text-dark' : 'text-text'
+    }`}>
+      {children}
+    </Text>
   );
 }

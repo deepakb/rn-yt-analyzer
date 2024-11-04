@@ -64,24 +64,6 @@ export function Header({ onNotificationPress }: HeaderProps) {
             className="animate-fade-in"
           />
         </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={onNotificationPress}
-          className="
-            p-xs rounded-lg 
-            active:bg-background-subtle dark:active:bg-background-subtle-dark
-            transition-colors duration-200
-          "
-          accessibilityLabel="Notifications"
-          accessibilityRole="button"
-        >
-          <GradientIcon
-            name="notifications-outline"
-            size="md"
-            gradient="ocean"
-            className="animate-fade-in"
-          />
-        </TouchableOpacity>
       </View>
     </View>
   );

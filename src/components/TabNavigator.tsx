@@ -68,6 +68,8 @@ export function TabNavigator() {
           elevation: 0,
           height: Platform.OS === 'ios' ? 85 : 60,
           paddingBottom: Platform.OS === 'ios' ? 25 : 10,
+          position: 'absolute',
+          bottom: 0,
         },
         tabBarItemStyle: {
           paddingTop: 10,
@@ -95,8 +97,8 @@ export function TabNavigator() {
             tabBarLabel: ({ focused }) => (
               <GradientText
                 gradient={focused ? gradient : mutedGradient}
-                variant={focused ? 'body-sm' : 'body-xs'}
-                weight={focused ? 'medium' : 'regular'}
+                variant={'body-sm'}
+                weight={'medium'}
                 className="transition-opacity duration-200"
               >
                 {title}

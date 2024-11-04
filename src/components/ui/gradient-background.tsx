@@ -6,7 +6,7 @@ interface GradientBackgroundProps extends ViewProps {
   gradient: GradientConfig | GradientPreset;
   variant?: 'primary' | 'secondary' | 'surface' | 'card';
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const variantClasses = {
@@ -29,7 +29,7 @@ export function GradientBackground({
     : gradient;
 
   const baseClasses = [
-    variantClasses[variant],
+    children ? variantClasses[variant] : '',
     'animate-gradient-x',
     'overflow-hidden',
     className
