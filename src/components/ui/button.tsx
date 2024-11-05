@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import { Slot } from "expo-router" // Optional if using Slot component for customization
 
 interface ButtonProps {
@@ -54,11 +54,18 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <Component
-      className={combinedClasses} // Use NativeWind utility classes
+      className={combinedClasses}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text>{children}</Text>
+      <View className="flex-row items-center justify-center gap-3">
+        {React.Children.map(children, child => {
+          if (typeof child === 'string') {
+            return <Text className="text-inherit">{child}</Text>;
+          }
+          return child;
+        })}
+      </View>
     </Component>
   );
 };

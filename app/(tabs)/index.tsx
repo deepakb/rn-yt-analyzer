@@ -92,7 +92,7 @@ export default function DesignSystemShowcase() {
           <ColorCircle gradient="warning" label="Warning" />
           <ColorCircle gradient="error" label="Error" />
           <View className="h-16 bg-primary" />
-          <Button>
+          <Button variant="secondary">
             <Ionicons
               name={"mail"}
               size={20}
