@@ -3,6 +3,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Avatar, AvatarFallback, AvatarImage, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // Add this helper component for color circles
 function ColorCircle({ 
@@ -116,7 +117,33 @@ export default function DesignSystemShowcase() {
           </Avatar>
         </View>
 
-        
+        {/* Accordion Section */}
+        <SectionTitle>Accordion</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          <Accordion type="single" defaultValue="item-1">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                Is it accessible?
+              </AccordionTrigger>
+              <AccordionContent>
+                <Text className="text-body-sm text-text dark:text-text-dark">
+                  Yes. It adheres to the WAI-ARIA design pattern.
+                </Text>
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-2">
+              <AccordionTrigger>
+                Is it styled?
+              </AccordionTrigger>
+              <AccordionContent>
+                <Text className="text-body-sm text-text dark:text-text-dark">
+                  Yes. It comes with default styles that match your design system.
+                </Text>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </View>
 
         
       </View>
