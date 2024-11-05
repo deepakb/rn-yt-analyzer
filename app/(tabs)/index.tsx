@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import { Avatar, AvatarFallback, AvatarImage, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -92,14 +92,28 @@ export default function DesignSystemShowcase() {
           <ColorCircle gradient="warning" label="Warning" />
           <ColorCircle gradient="error" label="Error" />
           <View className="h-16 bg-primary" />
+        </View>
+
+        {/* Button Section */}
+        <SectionTitle>Button</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
           <Button variant="destructive">
-            <Ionicons
+          <Ionicons
               name={"mail"}
               size={20}
               color="white"
             />
             Login with Email
           </Button>
+        </View>
+
+        {/* Avatar Section */}
+        <SectionTitle>Avatar</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          <Avatar>
+            <AvatarImage source={{ uri: 'https://github.com/shadcn.png' }} />
+            <AvatarFallback initials="JD" />
+          </Avatar>
         </View>
 
         
