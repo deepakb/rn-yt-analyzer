@@ -1,10 +1,22 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Avatar, AvatarFallback, AvatarImage, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import { GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { AlertTitle, Alert, AlertDescription } from '@/components/ui/alert';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from '@/components/ui/alert-dialog'
 
 // Add this helper component for color circles
 function ColorCircle({ 
@@ -43,6 +55,11 @@ function ColorCircle({
 
 export default function DesignSystemShowcase() {
   const { isDark } = useTheme();
+
+  const handleDelete = () => {
+    // Handle delete action
+    console.log('Deleted')
+  }
 
   return (
     <ScrollView 
@@ -162,6 +179,34 @@ export default function DesignSystemShowcase() {
               Your changes have been saved successfully.
             </AlertDescription>
           </Alert>
+        </View>
+
+        {/* Alert Dialog Section */}
+        <SectionTitle>Alert Dialog</SectionTitle>
+        <View className="space-y-4 mb-8">
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Text style={{ color: 'red' }}>Delete Account</Text>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  <Text>Delete Account?</Text>
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  <Text>
+                    This will permanently delete your account. This action cannot be undone.
+                  </Text>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onPress={handleDelete}>Delete</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </View>
 
         
