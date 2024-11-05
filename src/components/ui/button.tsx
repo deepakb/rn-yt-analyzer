@@ -23,14 +23,24 @@ const Button: React.FC<ButtonProps> = ({
   const baseClasses =
     "inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50";
 
-  // Variant styles (Tailwind utility classes mapped to NativeWind)
+  // Variant styles with explicit text colors
   const variantClasses: Record<string, string> = {
-    default: "bg-blue-500 text-white hover:bg-blue-600",
-    destructive: "bg-red-500 text-white hover:bg-red-600",
-    outline: "border border-gray-300 text-gray-700 hover:bg-gray-100",
-    secondary: "bg-gray-500 text-white hover:bg-gray-600",
-    ghost: "bg-transparent text-gray-700 hover:bg-gray-100",
-    link: "text-blue-500 underline hover:text-blue-600",
+    default: "bg-blue-500 hover:bg-blue-600",
+    destructive: "bg-red-500 hover:bg-red-600",
+    outline: "border border-gray-300 hover:bg-gray-100",
+    secondary: "bg-gray-500 hover:bg-gray-600",
+    ghost: "bg-transparent hover:bg-gray-100",
+    link: "bg-transparent underline hover:text-blue-600",
+  };
+
+  // Text colors for each variant
+  const variantTextColors: Record<string, string> = {
+    default: "text-white",
+    destructive: "text-white",
+    outline: "text-gray-700",
+    secondary: "text-white",
+    ghost: "text-gray-700",
+    link: "text-blue-500",
   };
 
   // Size styles (Tailwind utility classes mapped to NativeWind)
@@ -46,11 +56,17 @@ const Button: React.FC<ButtonProps> = ({
     baseClasses,
     variantClasses[variant],
     sizeClasses[size],
-    className, // Allow overriding/adding custom styles
+    className,
   ].join(" ");
 
   // Determine component type (Slot or TouchableOpacity)
   const Component = asChild ? Slot : TouchableOpacity;
+
+  // Extract text-specific classes from className
+  const customTextClass = className.split(' ').find(cls => cls.startsWith('text-'));
+  
+  // Use custom text class if provided, otherwise fall back to variant text color
+  const textClass = customTextClass || variantTextColors[variant];
 
   return (
     <Component
@@ -61,7 +77,7 @@ const Button: React.FC<ButtonProps> = ({
       <View className="flex-row items-center justify-center gap-3">
         {React.Children.map(children, child => {
           if (typeof child === 'string') {
-            return <Text className="text-inherit">{child}</Text>;
+            return <Text className={textClass}>{child}</Text>;
           }
           return child;
         })}
