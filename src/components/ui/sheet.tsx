@@ -102,7 +102,7 @@ const SheetTrigger = React.forwardRef<TouchableOpacity, SheetTriggerProps>(
 )
 SheetTrigger.displayName = "SheetTrigger"
 
-const SheetOverlay = React.forwardRef<Pressable, SheetOverlayProps>(
+const SheetOverlay = React.forwardRef<View, SheetOverlayProps>(
   ({ className, ...props }, ref) => {
     const { onOpenChange } = useSheet()
     const opacity = useSharedValue(0)
@@ -188,7 +188,8 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
             top: insets.top,
             left: 0,
             paddingLeft: insets.left,
-            paddingBottom: insets.bottom
+            paddingBottom: insets.bottom,
+            position: 'absolute' as const
           }
         case "right":
           return {
@@ -197,12 +198,13 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
             top: insets.top,
             right: 0,
             paddingRight: insets.right,
-            paddingBottom: insets.bottom
+            paddingBottom: insets.bottom,
+            position: 'absolute' as const
           }
         case "top":
           return {
-            position: 'absolute',
-            width: "100%",
+            position: 'absolute' as const,
+            width: '100%',
             maxHeight: height * 0.8,
             top: insets.top,
             left: 0,
@@ -214,8 +216,9 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
           }
         case "bottom":
           return {
-            width: "100%",
-            maxHeight: "80%",
+            position: 'absolute' as const,
+            width: '100%',
+            maxHeight: '80%',
             bottom: 0,
             paddingBottom: insets.bottom
           }
@@ -236,8 +239,7 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
             ref={ref}
             style={[
               contentStyle,
-              sheetStyle,
-              { position: 'absolute' }
+              sheetStyle
             ]}
             className={`
               bg-background dark:bg-background-dark
