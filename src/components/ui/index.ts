@@ -3,3 +3,4 @@ export * from '@/components/ui/gradient-icon';
 export * from '@/components/ui/gradient-background';
 export * from '@/types/gradient';
 export * from '@/components/ui/avatar';
+export * from '@/components/ui/alert';

@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage, GradientBackground, GradientPreset
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { AlertTitle, Alert, AlertDescription } from '@/components/ui/alert';
 
 // Add this helper component for color circles
 function ColorCircle({ 
@@ -143,6 +144,24 @@ export default function DesignSystemShowcase() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        </View>
+
+        {/* Alert Section */}
+        <SectionTitle>Alert</SectionTitle>
+        <View className="space-y-4 mb-8">
+          <Alert variant="destructive" icon="alert-circle">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              Your session has expired. Please log in again.
+            </AlertDescription>
+          </Alert>
+
+          <Alert variant="success" icon="checkmark-circle">
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>
+              Your changes have been saved successfully.
+            </AlertDescription>
+          </Alert>
         </View>
 
         
