@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, GradientBackground, GradientPreset, GradientText, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -40,6 +40,7 @@ function ColorCircle({
           className={[
             'w-16 h-16 rounded-full',
             gradient === 'primary' && 'bg-primary',
+            gradient === 'secondary' && 'bg-secondary',
             gradient === 'success' && 'bg-success',
             gradient === 'warning' && 'bg-warning',
             gradient === 'error' && 'bg-error',
@@ -107,6 +108,7 @@ export default function DesignSystemShowcase() {
         <SectionTitle>Colors</SectionTitle>
         <View className="flex-row flex-wrap justify-between mb-8">
           <ColorCircle gradient="primary" label="Primary" />
+          <ColorCircle gradient="secondary" label="Secondary" />
           <ColorCircle gradient="success" label="Success" />
           <ColorCircle gradient="warning" label="Warning" />
           <ColorCircle gradient="error" label="Error" />
@@ -243,6 +245,94 @@ export default function DesignSystemShowcase() {
             </BreadcrumbList>
           </Breadcrumb>
         </View>
+
+        {/* Sheet Section */}
+<SectionTitle>Sheet</SectionTitle>
+<View className="flex-row flex-wrap gap-4 mb-8">
+  {/* Bottom Sheet */}
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Bottom Sheet</Button>
+      </SheetTrigger>
+      <SheetContent side="bottom">
+        <SheetHeader>
+          <SheetTitle>Bottom Sheet</SheetTitle>
+          <SheetDescription>This sheet slides up from the bottom</SheetDescription>
+        </SheetHeader>
+        <View className="py-4">
+          <Text className="text-text dark:text-text-dark">
+            Add your content here
+          </Text>
+        </View>
+        <SheetFooter>
+          <Button onPress={() => {}}>Action</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+
+    {/* Top Sheet */}
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Top Sheet</Button>
+      </SheetTrigger>
+      <SheetContent side="top">
+        <SheetHeader>
+          <SheetTitle>Top Sheet</SheetTitle>
+          <SheetDescription>This sheet slides down from the top</SheetDescription>
+        </SheetHeader>
+        <View className="py-4">
+          <Text className="text-text dark:text-text-dark">
+            Add your content here
+          </Text>
+        </View>
+        <SheetFooter>
+          <Button onPress={() => {}}>Action</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+
+    {/* Left Sheet */}
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Left Sheet</Button>
+      </SheetTrigger>
+      <SheetContent side="left">
+        <SheetHeader>
+          <SheetTitle>Left Sheet</SheetTitle>
+          <SheetDescription>This sheet slides in from the left</SheetDescription>
+        </SheetHeader>
+        <View className="py-4">
+          <Text className="text-text dark:text-text-dark">
+            Add your content here
+          </Text>
+        </View>
+        <SheetFooter>
+          <Button onPress={() => {}}>Action</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+
+    {/* Right Sheet */}
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Right Sheet</Button>
+      </SheetTrigger>
+      <SheetContent side="right">
+        <SheetHeader>
+          <SheetTitle>Right Sheet</SheetTitle>
+          <SheetDescription>This sheet slides in from the right</SheetDescription>
+        </SheetHeader>
+        <View className="py-4">
+          <Text className="text-text dark:text-text-dark">
+            Add your content here
+          </Text>
+        </View>
+        <SheetFooter>
+          <Button onPress={() => {}}>Action</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  </View>
 
         
       </View>
