@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Badge, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -222,6 +222,26 @@ export default function DesignSystemShowcase() {
           <Badge variant="default" className="bg-success">
             Success
         </Badge>
+        </View>
+
+        {/* Breadcrumb Section */}
+        <SectionTitle>Breadcrumb</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+        <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+          </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </View>
 
         
