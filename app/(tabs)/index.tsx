@@ -1,6 +1,8 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import Button from '@/components/ui/button';
+import { Ionicons } from '@expo/vector-icons';
 
 // Add this helper component for color circles
 function ColorCircle({ 
@@ -89,7 +91,18 @@ export default function DesignSystemShowcase() {
           <ColorCircle gradient="success" label="Success" />
           <ColorCircle gradient="warning" label="Warning" />
           <ColorCircle gradient="error" label="Error" />
+          <View className="h-16 bg-primary" />
+          <Button>
+            <Ionicons
+              name={"mail"}
+              size={20}
+              color="white"
+            />
+            Login with Email
+          </Button>
         </View>
+
+        
 
         
       </View>
