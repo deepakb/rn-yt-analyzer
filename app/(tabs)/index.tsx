@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { GradientBackground, GradientPreset, GradientText } from '@/components/ui';
+import { Badge, GradientBackground, GradientPreset, GradientText } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -207,6 +207,21 @@ export default function DesignSystemShowcase() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+        </View>
+
+        {/* Badge Section */}
+        <SectionTitle>Badge</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          {/* Example usage */}
+          <Badge variant="default">New</Badge>
+          <Badge variant="secondary">In Progress</Badge>
+          <Badge variant="destructive">Error</Badge>
+          <Badge variant="outline">Draft</Badge>
+
+          {/* With custom className */}
+          <Badge variant="default" className="bg-success">
+            Success
+        </Badge>
         </View>
 
         

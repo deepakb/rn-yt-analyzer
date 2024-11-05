@@ -23,6 +23,19 @@ module.exports = {
           800: '#003D7A',
           900: '#002952',
         },
+        secondary: {
+          DEFAULT: '#7928CA', // Your base secondary color
+          50: '#F5F3FF',
+          100: '#EDE9FE',
+          200: '#DDD6FE',
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#7928CA', // Base color
+          600: '#7C3AED',
+          700: '#6D28D9',
+          800: '#5B21B6',
+          900: '#4C1D95',
+        },
         success: {
           DEFAULT: '#10B981',
           50: '#ECFDF5',
