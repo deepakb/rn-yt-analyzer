@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   Easing,
 } from "react-native-reanimated"
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Types
 interface SheetRootProps {
@@ -139,10 +140,12 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
     const { open, onOpenChange } = useSheet()
     const { isDark } = useTheme()
     const { width, height } = Dimensions.get("window")
+    const insets = useSafeAreaInsets()
     
     const translateX = useSharedValue(side === "right" ? width : side === "left" ? -width : 0)
     const translateY = useSharedValue(side === "bottom" ? height : side === "top" ? -height : 0)
 
+    // Animation effect
     React.useEffect(() => {
       if (open) {
         translateX.value = withTiming(0, {
@@ -163,8 +166,9 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
           { duration: 200 }
         )
       }
-    }, [open, side])
+    }, [open, side, width, height])
 
+    // Animated style for translations
     const contentStyle = useAnimatedStyle(() => ({
       transform: [
         { translateX: translateX.value },
@@ -172,7 +176,51 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
       ]
     }))
 
-    if (!open) return null
+    // Sheet positioning and safe area style
+    const sheetStyle = React.useMemo(() => {
+      const baseWidth = Math.min(width * 0.75, 350)
+      
+      switch (side) {
+        case "left":
+          return {
+            width: baseWidth,
+            height: height - insets.top,
+            top: insets.top,
+            left: 0,
+            paddingLeft: insets.left,
+            paddingBottom: insets.bottom
+          }
+        case "right":
+          return {
+            width: baseWidth,
+            height: height - insets.top,
+            top: insets.top,
+            right: 0,
+            paddingRight: insets.right,
+            paddingBottom: insets.bottom
+          }
+        case "top":
+          return {
+            position: 'absolute',
+            width: "100%",
+            maxHeight: height * 0.8,
+            top: insets.top,
+            left: 0,
+            right: 0,
+            paddingTop: insets.top + 16,
+            paddingHorizontal: Math.max(insets.left, insets.right),
+            paddingBottom: 16,
+            zIndex: 50
+          }
+        case "bottom":
+          return {
+            width: "100%",
+            maxHeight: "80%",
+            bottom: 0,
+            paddingBottom: insets.bottom
+          }
+      }
+    }, [side, width, height, insets])
 
     return (
       <Modal
@@ -186,18 +234,14 @@ const SheetContent = React.forwardRef<View, SheetContentProps>(
           <SheetOverlay />
           <Animated.View
             ref={ref}
-            style={contentStyle}
+            style={[
+              contentStyle,
+              sheetStyle,
+              { position: 'absolute' }
+            ]}
             className={`
-              absolute bg-background dark:bg-background-dark
+              bg-background dark:bg-background-dark
               shadow-2xl p-6
-              ${side === "right" || side === "left" 
-                ? "h-full w-3/4 max-w-sm" 
-                : "w-full max-h-[80%]"
-              }
-              ${side === "left" ? "left-0" : ""}
-              ${side === "right" ? "right-0" : ""}
-              ${side === "top" ? "top-0" : ""}
-              ${side === "bottom" ? "bottom-0" : ""}
               ${className}
             `}
             {...props}
