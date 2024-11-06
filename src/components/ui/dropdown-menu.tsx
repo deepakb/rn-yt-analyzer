@@ -237,23 +237,25 @@ export function DropdownMenuContent({
         onPress={() => context.setOpen(false)}
       >
         <View
-          ref={contentRef}
           style={[
             {
               position: 'absolute',
               ...getOptimalPosition(),
               ...getOptimalWidth(),
+              zIndex: 1,
             },
           ]}
           className={`
-            rounded-md shadow-lg overflow-hidden
+            rounded-md shadow-lg overflow-visible
             ${isDark ? 'bg-surface-dark' : 'bg-surface'}
             border border-border dark:border-border-dark
             ${className}
           `}
         >
           <View onLayout={handleLayout} className="p-1">
-            <View onLayout={handleChildrenLayout}>{children}</View>
+            <View onLayout={handleChildrenLayout}>
+              {children}
+            </View>
           </View>
         </View>
       </Pressable>
@@ -411,58 +413,61 @@ export function DropdownMenuSubTrigger({
 }) {
   const { isDark } = useTheme()
   const context = React.useContext(SubMenuContext)
-  const dropdownContext = React.useContext(DropdownMenuContext)
   const triggerRef = React.useRef<View>(null)
-
-  const handlePress = (e: GestureResponderEvent) => {
-    e.stopPropagation()
+  
+  const handlePress = () => {
     if (!context || !triggerRef.current) return
-
+    
+    // Log for debugging
+    console.log('SubMenu Trigger Pressed')
+    
     triggerRef.current.measureInWindow((x, y, width, height) => {
+      // Log measurements
+      console.log('Measurements:', { x, y, width, height })
+      
       context.setPosition({
         x,
         y,
         width,
-        height,
+        height
       })
       context.setIsOpen(true)
     })
   }
 
   return (
-    <View ref={triggerRef}>
-      <Pressable
-        onPress={handlePress}
-        className={`
-          flex-row items-center gap-2
-          px-3 py-2 rounded-sm min-h-[40px]
-          ${isDark ? 'active:bg-muted-dark' : 'active:bg-muted'}
-        `}
-      >
-        {icon && (
-          <Ionicons
-            name={icon}
-            size={16}
-            color={isDark ? '#E5E7EB' : '#374151'}
-            style={{ marginRight: 8 }}
-          />
+    <Pressable
+      ref={triggerRef}
+      onPress={handlePress}
+      className={`
+        flex-row items-center gap-2
+        px-3 py-2 rounded-sm min-h-[40px]
+        ${isDark ? 'active:bg-muted-dark' : 'active:bg-muted'}
+      `}
+    >
+      {icon && (
+        <Ionicons
+          name={icon}
+          size={16}
+          color={isDark ? '#E5E7EB' : '#374151'}
+          style={{ marginRight: 8 }}
+        />
+      )}
+      <View className="flex-1 flex-row items-center justify-between">
+        {typeof children === 'string' ? (
+          <Text className={isDark ? 'text-text-dark' : 'text-text'}>
+            {children}
+          </Text>
+        ) : (
+          children
         )}
-        <View className="flex-1 flex-row items-center justify-between">
-          {typeof children === 'string' ? (
-            <Text className={isDark ? 'text-text-dark' : 'text-text'}>
-              {children}
-            </Text>
-          ) : (
-            children
-          )}
-          <Ionicons
-            name="chevron-forward"
-            size={16}
-            color={isDark ? '#E5E7EB' : '#374151'}
-          />
-        </View>
-      </Pressable>
-    </View>
+        <Ionicons
+          name="chevron-forward"
+          size={16}
+          color={isDark ? '#E5E7EB' : '#374151'}
+        />
+      </View>
+    </Pressable>
   )
 }
 
@@ -474,12 +479,10 @@ export function DropdownMenuSubContent({
   const context = React.useContext(SubMenuContext)
   const { isDark } = useTheme()
   const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
-  const [contentSize, setContentSize] =
-    React.useState<ContentMeasurements | null>(null)
-  const [childrenWidth, setChildrenWidth] = React.useState<number>(0)
-
+  const [contentSize, setContentSize] = React.useState<ContentMeasurements | null>(null)
+  
   if (!context?.isOpen || !context?.position) return null
-
+  
   const position = context.position
 
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -487,103 +490,60 @@ export function DropdownMenuSubContent({
     setContentSize({ width, height })
   }
 
-  const handleChildrenLayout = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout
-    setChildrenWidth(width)
-  }
-
-  // Calculate optimal width and position
   const getOptimalDimensions = () => {
-    if (!contentSize)
-      return {
-        left: position.x + position.width,
-        top: position.y,
-        minWidth: 220,
-      }
-
-    // Add padding for content
-    const horizontalPadding = 32
-    const minWidth = Math.max(220, childrenWidth + horizontalPadding)
+    const minWidth = 220
+    const padding = 8
 
     // Calculate available space
     const spaceOnRight = screenWidth - (position.x + position.width)
-    const spaceOnLeft = position.x
-    const spaceBelow = screenHeight - position.y
-    const spaceAbove = position.y
-
+    
     // Determine horizontal position
-    let horizontalPosition
-    if (spaceOnRight >= minWidth) {
-      // Show on right (preferred)
-      horizontalPosition = {
-        left: position.x + position.width - 4,
-      }
-    } else if (spaceOnLeft >= minWidth) {
-      // Show on left
-      horizontalPosition = {
-        right: screenWidth - position.x + 4,
-      }
-    } else {
-      // Not enough space either side, show on right with scroll
-      horizontalPosition = {
-        left: position.x + position.width - 4,
-        maxWidth: spaceOnRight - 16,
-      }
-    }
-
-    // Determine vertical position
-    let verticalPosition
-    if (spaceBelow >= contentSize.height) {
-      // Show below (preferred)
-      verticalPosition = {
-        top: position.y,
-      }
-    } else if (spaceAbove >= contentSize.height) {
-      // Show above
-      verticalPosition = {
-        bottom: screenHeight - position.y,
-      }
-    } else {
-      // Not enough space either way, show below with scroll
-      verticalPosition = {
-        top: position.y,
-        maxHeight: spaceBelow - 16,
-      }
+    const left = spaceOnRight >= minWidth 
+      ? position.x + position.width + padding  // Show on right
+      : position.x - minWidth - padding        // Show on left
+    
+    // Calculate vertical position
+    let top = position.y
+    
+    // Adjust if would go off bottom of screen
+    if (contentSize && top + contentSize.height > screenHeight - padding) {
+      top = screenHeight - contentSize.height - padding
     }
 
     return {
-      ...horizontalPosition,
-      ...verticalPosition,
-      width: minWidth,
-      minWidth: 220,
+      position: 'absolute' as const,
+      left: Math.max(padding, Math.min(left, screenWidth - minWidth - padding)),
+      top: Math.max(padding, top),
+      minWidth,
+      backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
+      elevation: 5,
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      zIndex: 2000,
     }
   }
 
   return (
-    <Modal transparent visible={context.isOpen} animationType="fade">
+    <Modal transparent visible={context.isOpen} animationType="none">
       <Pressable
-        className="flex-1 bg-transparent"
-        onPress={(e) => {
-          e.stopPropagation()
-          context.setIsOpen(false)
-        }}
+        style={{ flex: 1 }}
+        onPress={() => context.setIsOpen(false)}
       >
         <View
-          style={[
-            {
-              position: 'absolute',
-              ...getOptimalDimensions(),
-            },
-          ]}
+          style={getOptimalDimensions()}
+          onLayout={handleLayout}
           className={`
-            rounded-md shadow-lg overflow-hidden
-            ${isDark ? 'bg-surface-dark' : 'bg-surface'}
+            rounded-md overflow-hidden
             border border-border dark:border-border-dark
           `}
         >
-          <View onLayout={handleLayout} className="p-1">
-            <View onLayout={handleChildrenLayout}>{children}</View>
-          </View>
+          <Pressable onPress={(e) => e.stopPropagation()}>
+            <View className="p-1">
+              {children}
+            </View>
+          </Pressable>
         </View>
       </Pressable>
     </Modal>
