@@ -1,8 +1,10 @@
-import { Tabs } from 'expo-router';
-import { Platform } from 'react-native';
-import { useTheme } from '@/contexts/ThemeContext';
-import { GradientText, GradientIcon } from '@/components/ui';
-import { GradientConfig } from '@/types/gradient';
+import { Platform } from 'react-native'
+
+import { Tabs } from 'expo-router'
+
+import { GradientIcon, GradientText } from '@/components/ui'
+import { useTheme } from '@/contexts/ThemeContext'
+import { GradientConfig } from '@/types/gradient'
 
 const tabScreens = [
   {
@@ -10,52 +12,52 @@ const tabScreens = [
     title: 'Home',
     icon: {
       focused: 'home',
-      unfocused: 'home-outline'
+      unfocused: 'home-outline',
     },
-    gradient: 'primary' as const
+    gradient: 'primary' as const,
   },
   {
     name: 'analysis',
     title: 'Analysis',
     icon: {
       focused: 'analytics',
-      unfocused: 'analytics-outline'
+      unfocused: 'analytics-outline',
     },
-    gradient: 'primary' as const
+    gradient: 'primary' as const,
   },
   {
     name: 'bookmarks',
     title: 'Bookmarks',
     icon: {
       focused: 'bookmark',
-      unfocused: 'bookmark-outline'
+      unfocused: 'bookmark-outline',
     },
-    gradient: 'primary' as const
+    gradient: 'primary' as const,
   },
   {
     name: 'account',
     title: 'Account',
     icon: {
       focused: 'person',
-      unfocused: 'person-outline'
+      unfocused: 'person-outline',
     },
-    gradient: 'primary' as const
+    gradient: 'primary' as const,
   },
-] as const;
+] as const
 
 // Helper function to create muted gradient config
 const createMutedGradient = (isDark: boolean): GradientConfig => ({
   colors: [
     isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
-    isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)'
+    isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
   ],
   start: { x: 0, y: 0 },
-  end: { x: 1, y: 1 }
-});
+  end: { x: 1, y: 1 },
+})
 
 export function TabNavigator() {
-  const { isDark } = useTheme();
-  const mutedGradient = createMutedGradient(isDark);
+  const { isDark } = useTheme()
+  const mutedGradient = createMutedGradient(isDark)
 
   return (
     <Tabs
@@ -78,8 +80,11 @@ export function TabNavigator() {
           alignItems: 'center',
         },
         tabBarActiveTintColor: '#1E90FF',
-        tabBarInactiveTintColor: isDark ? 'rgb(156, 163, 175)' : 'rgb(107, 114, 128)',
-      }}>
+        tabBarInactiveTintColor: isDark
+          ? 'rgb(156, 163, 175)'
+          : 'rgb(107, 114, 128)',
+      }}
+    >
       {tabScreens.map(({ name, title, icon, gradient }) => (
         <Tabs.Screen
           key={name}
@@ -108,5 +113,5 @@ export function TabNavigator() {
         />
       ))}
     </Tabs>
-  );
-} 
+  )
+}

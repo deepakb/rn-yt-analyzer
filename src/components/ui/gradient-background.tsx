@@ -1,12 +1,14 @@
-import { View, ViewProps } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { GradientConfig, GradientPreset, gradients } from '@/types/gradient';
+import { View, ViewProps } from 'react-native'
+
+import { LinearGradient } from 'expo-linear-gradient'
+
+import { GradientConfig, GradientPreset, gradients } from '@/types/gradient'
 
 interface GradientBackgroundProps extends ViewProps {
-  gradient: GradientConfig | GradientPreset;
-  variant?: 'primary' | 'secondary' | 'surface' | 'card';
-  className?: string;
-  children?: React.ReactNode;
+  gradient: GradientConfig | GradientPreset
+  variant?: 'primary' | 'secondary' | 'surface' | 'card'
+  className?: string
+  children?: React.ReactNode
 }
 
 const variantClasses = {
@@ -14,26 +16,25 @@ const variantClasses = {
   secondary: 'rounded-xl shadow-lg',
   surface: 'rounded-2xl shadow-xl',
   card: 'rounded-lg shadow-sm',
-} as const;
+} as const
 
-export function GradientBackground({ 
-  gradient, 
+export function GradientBackground({
+  gradient,
   variant = 'primary',
   className = '',
   children,
-  ...props 
+  ...props
 }: GradientBackgroundProps) {
   // Handle gradient preset or custom config
-  const gradientConfig = typeof gradient === 'string' 
-    ? gradients[gradient] 
-    : gradient;
+  const gradientConfig =
+    typeof gradient === 'string' ? gradients[gradient] : gradient
 
   const baseClasses = [
     children ? variantClasses[variant] : '',
     'animate-gradient-x',
     'overflow-hidden',
-    className
-  ].join(' ');
+    className,
+  ].join(' ')
 
   return (
     <LinearGradient
@@ -46,5 +47,5 @@ export function GradientBackground({
     >
       {children}
     </LinearGradient>
-  );
-} 
+  )
+}

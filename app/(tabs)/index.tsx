@@ -1,32 +1,64 @@
-import { View, Text, ScrollView } from 'react-native';
-import { useTheme } from '@/contexts/ThemeContext';
-import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, GradientBackground, GradientPreset, GradientText, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui';
-import Button from '@/components/ui/button';
-import { Ionicons } from '@expo/vector-icons';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { AlertTitle, Alert, AlertDescription } from '@/components/ui/alert';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ScrollView, Text, View } from 'react-native'
+
+import { Ionicons } from '@expo/vector-icons'
+
+import {
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  GradientBackground,
+  GradientPreset,
+  GradientText,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
   AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Button from '@/components/ui/button'
+import { useTheme } from '@/contexts/ThemeContext'
 
 // Add this helper component for color circles
-function ColorCircle({ 
-  gradient, 
-  label, 
-  isGradient = false 
-}: { 
-  gradient: GradientPreset, 
-  label: string, 
-  isGradient?: boolean 
+function ColorCircle({
+  gradient,
+  label,
+  isGradient = false,
+}: {
+  gradient: GradientPreset
+  label: string
+  isGradient?: boolean
 }) {
   return (
     <View className="items-center">
@@ -36,7 +68,7 @@ function ColorCircle({
           className="w-16 h-16 rounded-full"
         />
       ) : (
-        <View 
+        <View
           className={[
             'w-16 h-16 rounded-full',
             gradient === 'primary' && 'bg-primary',
@@ -44,18 +76,20 @@ function ColorCircle({
             gradient === 'success' && 'bg-success',
             gradient === 'warning' && 'bg-warning',
             gradient === 'error' && 'bg-error',
-          ].filter(Boolean).join(' ')}
+          ]
+            .filter(Boolean)
+            .join(' ')}
         />
       )}
       <Text className="text-body-xs font-inter-medium mt-2 text-text dark:text-text-dark">
         {label}
       </Text>
     </View>
-  );
+  )
 }
 
 export default function DesignSystemShowcase() {
-  const { isDark } = useTheme();
+  const { isDark } = useTheme()
 
   const handleDelete = () => {
     // Handle delete action
@@ -63,7 +97,7 @@ export default function DesignSystemShowcase() {
   }
 
   return (
-    <ScrollView 
+    <ScrollView
       className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`}
       contentContainerClassName="pb-32"
       showsVerticalScrollIndicator={true}
@@ -72,15 +106,11 @@ export default function DesignSystemShowcase() {
         {/* Typography Section */}
         <SectionTitle>Typography</SectionTitle>
         <View className="space-y-4 mb-8">
-          <GradientText 
-            gradient="primary"
-            variant="display-2xl"
-            weight="bold"
-          >
+          <GradientText gradient="primary" variant="display-2xl" weight="bold">
             2XL
           </GradientText>
-          
-          <GradientText 
+
+          <GradientText
             gradient="secondary"
             variant="display-lg"
             weight="semibold"
@@ -88,9 +118,11 @@ export default function DesignSystemShowcase() {
             LG
           </GradientText>
 
-          <Text className={`text-body-lg font-inter-regular ${
-            isDark ? 'text-text-dark' : 'text-text'
-          }`}>
+          <Text
+            className={`text-body-lg font-inter-regular ${
+              isDark ? 'text-text-dark' : 'text-text'
+            }`}
+          >
             Regular Body Text LG
           </Text>
         </View>
@@ -119,11 +151,7 @@ export default function DesignSystemShowcase() {
         <SectionTitle>Button</SectionTitle>
         <View className="flex-row flex-wrap justify-between mb-8">
           <Button variant="destructive">
-          <Ionicons
-              name={"mail"}
-              size={20}
-              color="white"
-            />
+            <Ionicons name={'mail'} size={20} color="white" />
             Login with Email
           </Button>
         </View>
@@ -142,23 +170,20 @@ export default function DesignSystemShowcase() {
         <View className="flex-row flex-wrap justify-between mb-8">
           <Accordion type="single" defaultValue="item-1">
             <AccordionItem value="item-1">
-              <AccordionTrigger>
-                Is it accessible?
-              </AccordionTrigger>
+              <AccordionTrigger>Is it accessible?</AccordionTrigger>
               <AccordionContent>
                 <Text className="text-body-sm text-text dark:text-text-dark">
                   Yes. It adheres to the WAI-ARIA design pattern.
                 </Text>
               </AccordionContent>
             </AccordionItem>
-            
+
             <AccordionItem value="item-2">
-              <AccordionTrigger>
-                Is it styled?
-              </AccordionTrigger>
+              <AccordionTrigger>Is it styled?</AccordionTrigger>
               <AccordionContent>
                 <Text className="text-body-sm text-text dark:text-text-dark">
-                  Yes. It comes with default styles that match your design system.
+                  Yes. It comes with default styles that match your design
+                  system.
                 </Text>
               </AccordionContent>
             </AccordionItem>
@@ -198,14 +223,17 @@ export default function DesignSystemShowcase() {
                 </AlertDialogTitle>
                 <AlertDialogDescription>
                   <Text>
-                    This will permanently delete your account. This action cannot be undone.
+                    This will permanently delete your account. This action
+                    cannot be undone.
                   </Text>
                 </AlertDialogDescription>
               </AlertDialogHeader>
 
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onPress={handleDelete}>Delete</AlertDialogAction>
+                <AlertDialogAction onPress={handleDelete}>
+                  Delete
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -223,158 +251,173 @@ export default function DesignSystemShowcase() {
           {/* With custom className */}
           <Badge variant="default" className="bg-success">
             Success
-        </Badge>
+          </Badge>
         </View>
 
         {/* Breadcrumb Section */}
         <SectionTitle>Breadcrumb</SectionTitle>
         <View className="flex-row flex-wrap justify-between mb-8">
-        <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/components">Components</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-          </BreadcrumbItem>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+              </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </View>
 
         {/* Sheet Section */}
-<SectionTitle>Sheet</SectionTitle>
-<View className="flex-row flex-wrap gap-4 mb-8">
-  {/* Bottom Sheet */}
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Bottom Sheet</Button>
-      </SheetTrigger>
-      <SheetContent side="bottom">
-        <SheetHeader>
-          <SheetTitle>Bottom Sheet</SheetTitle>
-          <SheetDescription>This sheet slides up from the bottom</SheetDescription>
-        </SheetHeader>
-        <View className="py-4">
-          <Text className="text-text dark:text-text-dark">
-            Add your content here
-          </Text>
-        </View>
-        <SheetFooter>
-          <Button onPress={() => {}}>Action</Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+        <SectionTitle>Sheet</SectionTitle>
+        <View className="flex-row flex-wrap gap-4 mb-8">
+          {/* Bottom Sheet */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Bottom Sheet</Button>
+            </SheetTrigger>
+            <SheetContent side="bottom">
+              <SheetHeader>
+                <SheetTitle>Bottom Sheet</SheetTitle>
+                <SheetDescription>
+                  This sheet slides up from the bottom
+                </SheetDescription>
+              </SheetHeader>
+              <View className="py-4">
+                <Text className="text-text dark:text-text-dark">
+                  Add your content here
+                </Text>
+              </View>
+              <SheetFooter>
+                <Button onPress={() => {}}>Action</Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
 
-    {/* Top Sheet */}
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Top Sheet</Button>
-      </SheetTrigger>
-      <SheetContent side="top">
-        <SheetHeader>
-          <SheetTitle>Top Sheet</SheetTitle>
-          <SheetDescription>This sheet slides down from the top</SheetDescription>
-        </SheetHeader>
-        <View className="py-4">
-          <Text className="text-text dark:text-text-dark">
-            Add your content here
-          </Text>
-        </View>
-        <SheetFooter>
-          <Button onPress={() => {}}>Action</Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+          {/* Top Sheet */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Top Sheet</Button>
+            </SheetTrigger>
+            <SheetContent side="top">
+              <SheetHeader>
+                <SheetTitle>Top Sheet</SheetTitle>
+                <SheetDescription>
+                  This sheet slides down from the top
+                </SheetDescription>
+              </SheetHeader>
+              <View className="py-4">
+                <Text className="text-text dark:text-text-dark">
+                  Add your content here
+                </Text>
+              </View>
+              <SheetFooter>
+                <Button onPress={() => {}}>Action</Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
 
-    {/* Left Sheet */}
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Left Sheet</Button>
-      </SheetTrigger>
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>Left Sheet</SheetTitle>
-          <SheetDescription>This sheet slides in from the left</SheetDescription>
-        </SheetHeader>
-        <View className="py-4">
-          <Text className="text-text dark:text-text-dark">
-            Add your content here
-          </Text>
-        </View>
-        <SheetFooter>
-          <Button onPress={() => {}}>Action</Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+          {/* Left Sheet */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Left Sheet</Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <SheetHeader>
+                <SheetTitle>Left Sheet</SheetTitle>
+                <SheetDescription>
+                  This sheet slides in from the left
+                </SheetDescription>
+              </SheetHeader>
+              <View className="py-4">
+                <Text className="text-text dark:text-text-dark">
+                  Add your content here
+                </Text>
+              </View>
+              <SheetFooter>
+                <Button onPress={() => {}}>Action</Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
 
-    {/* Right Sheet */}
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Right Sheet</Button>
-      </SheetTrigger>
-      <SheetContent side="right">
-        <SheetHeader>
-          <SheetTitle>Right Sheet</SheetTitle>
-          <SheetDescription>This sheet slides in from the right</SheetDescription>
-        </SheetHeader>
-        <View className="py-4">
-          <Text className="text-text dark:text-text-dark">
-            Add your content here
-          </Text>
+          {/* Right Sheet */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Right Sheet</Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <SheetHeader>
+                <SheetTitle>Right Sheet</SheetTitle>
+                <SheetDescription>
+                  This sheet slides in from the right
+                </SheetDescription>
+              </SheetHeader>
+              <View className="py-4">
+                <Text className="text-text dark:text-text-dark">
+                  Add your content here
+                </Text>
+              </View>
+              <SheetFooter>
+                <Button onPress={() => {}}>Action</Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
         </View>
-        <SheetFooter>
-          <Button onPress={() => {}}>Action</Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  </View>
 
         {/* Dropdown Menu Section */}
         <SectionTitle>Dropdown Menu</SectionTitle>
         <View className="flex-row flex-wrap justify-between mb-8">
-        <DropdownMenu>
-  <DropdownMenuTrigger>
-    <Text>Options</Text>
-  </DropdownMenuTrigger>
-  
-  <DropdownMenuContent>
-    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    <DropdownMenuItem icon="copy-outline" onSelect={() => console.log('Copy')}>
-      Copy
-    </DropdownMenuItem>
-    <DropdownMenuItem icon="share-outline" onSelect={() => console.log('Share')}>
-      Share
-    </DropdownMenuItem>
-    <DropdownMenuSeparator />
-    <DropdownMenuItem 
-      icon="trash-outline" 
-      destructive 
-      onSelect={() => console.log('Delete')}
-    >
-      Delete
-    </DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
-        </View>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Text>Options</Text>
+            </DropdownMenuTrigger>
 
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                icon="copy-outline"
+                onSelect={() => console.log('Copy')}
+              >
+                Copy
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                icon="share-outline"
+                onSelect={() => console.log('Share')}
+              >
+                Share
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                icon="trash-outline"
+                destructive
+                onSelect={() => console.log('Delete')}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </View>
       </View>
     </ScrollView>
-  );
+  )
 }
 
 function SectionTitle({ children }: { children: string }) {
-  const { isDark } = useTheme();
-  
+  const { isDark } = useTheme()
+
   return (
-    <Text className={`text-2xl font-inter-bold mb-4 ${
-      isDark ? 'text-text-dark' : 'text-text'
-    }`}>
+    <Text
+      className={`text-2xl font-inter-bold mb-4 ${
+        isDark ? 'text-text-dark' : 'text-text'
+      }`}
+    >
       {children}
     </Text>
-  );
+  )
 }

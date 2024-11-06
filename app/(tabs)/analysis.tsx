@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native'
 
 export default function SearchScreen() {
   return (
@@ -7,5 +7,5 @@ export default function SearchScreen() {
         Search Screen
       </Text>
     </View>
-  );
-} 
+  )
+}

@@ -1,21 +1,22 @@
-import React from "react";
-import { View, Text, ViewProps } from "react-native";
+import React from 'react'
+
+import { Text, View, ViewProps } from 'react-native'
 
 interface BadgeProps extends ViewProps {
-  variant?: "default" | "secondary" | "destructive" | "outline";
-  className?: string;
-  children: React.ReactNode;
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline'
+  className?: string
+  children: React.ReactNode
 }
 
 const Badge = React.forwardRef<View, BadgeProps>(
-  ({ variant = "default", className = "", children, ...props }, ref) => {
+  ({ variant = 'default', className = '', children, ...props }, ref) => {
     // Define variant styles
     const variantStyles = {
       default: `bg-primary border-transparent`,
       secondary: `bg-secondary-500 border-transparent`,
       destructive: `bg-error border-transparent`,
       outline: `border-border dark:border-border-dark bg-transparent`,
-    };
+    }
 
     // Define text colors for each variant
     const variantTextColors = {
@@ -23,7 +24,7 @@ const Badge = React.forwardRef<View, BadgeProps>(
       secondary: `text-white`,
       destructive: `text-white`,
       outline: `text-text dark:text-text-dark`,
-    };
+    }
 
     return (
       <View
@@ -37,10 +38,10 @@ const Badge = React.forwardRef<View, BadgeProps>(
         `}
         {...props}
       >
-        {React.Children.map(children, child => {
+        {React.Children.map(children, (child) => {
           if (typeof child === 'string') {
             return (
-              <Text 
+              <Text
                 className={`
                   text-body-xs font-inter-semibold
                   ${variantTextColors[variant]}
@@ -48,15 +49,15 @@ const Badge = React.forwardRef<View, BadgeProps>(
               >
                 {child}
               </Text>
-            );
+            )
           }
-          return child;
+          return child
         })}
       </View>
-    );
+    )
   }
-);
+)
 
-Badge.displayName = "Badge";
+Badge.displayName = 'Badge'
 
-export { Badge }; 
+export { Badge }

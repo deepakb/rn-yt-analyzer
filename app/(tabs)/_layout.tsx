@@ -1,5 +1,5 @@
-import { TabNavigator } from '@/components/TabNavigator';
+import { TabNavigator } from '@/components/TabNavigator'
 
 export default function TabsLayout() {
-  return <TabNavigator />;
+  return <TabNavigator />
 }

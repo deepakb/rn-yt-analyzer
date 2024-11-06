@@ -1,64 +1,69 @@
-import '../global.css';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { useLoadFonts } from '@/hooks/useLoadFonts';
-import { useEffect } from 'react';
-import { Stack } from 'expo-router';
-import { Header } from '@/components/Header';
-import { ThemeProvider } from '@/contexts/ThemeContext';
-import { useTheme } from '@/contexts/ThemeContext';
-import { NavigationContainer } from '@react-navigation/native';
-import { View } from 'react-native';
+import { useEffect } from 'react'
+
+import { View } from 'react-native'
+
+import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
+
+import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+
+import { Header } from '@/components/Header'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import { useTheme } from '@/contexts/ThemeContext'
+import { useLoadFonts } from '@/hooks/useLoadFonts'
+
+import '../global.css'
 
 // Keep splash screen visible while fonts are loading
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 // Create a themed container component
 function ThemedContainer({ children }: { children: React.ReactNode }) {
-  const { isDark } = useTheme();
-  
+  const { isDark } = useTheme()
+
   return (
     <SafeAreaProvider>
-      <StatusBar 
+      <StatusBar
         style={isDark ? 'light' : 'dark'}
-        backgroundColor="transparent" 
-        translucent={true} 
+        backgroundColor="transparent"
+        translucent={true}
       />
-      <SafeAreaView 
-        className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`} 
+      <SafeAreaView
+        className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`}
         edges={['top']}
       >
         {children}
       </SafeAreaView>
     </SafeAreaProvider>
-  );
+  )
 }
 
 export default function RootLayout() {
-  const { fontsLoaded, fontError } = useLoadFonts();
+  const { fontsLoaded, fontError } = useLoadFonts()
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
     }
-  }, [fontsLoaded, fontError]);
+  }, [fontsLoaded, fontError])
 
   if (!fontsLoaded && !fontError) {
-    return null;
+    return null
   }
 
   return (
     <ThemeProvider>
       <ThemedContainer>
-        <NavigationContainer
-          independent={true}
-        >
+        <NavigationContainer independent={true}>
           <Stack
             screenOptions={{
               header: () => (
-                <Header 
-                  onNotificationPress={() => console.log('Notification pressed')}
+                <Header
+                  onNotificationPress={() =>
+                    console.log('Notification pressed')
+                  }
                 />
               ),
               headerShown: true,
@@ -78,5 +83,5 @@ export default function RootLayout() {
         </NavigationContainer>
       </ThemedContainer>
     </ThemeProvider>
-  );
+  )
 }

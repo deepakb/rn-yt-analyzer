@@ -1,6 +1,7 @@
-import * as React from 'react';
-import Svg, { Path } from 'react-native-svg';
-import { SvgProps } from 'react-native-svg';
+import * as React from 'react'
+
+import Svg, { Path } from 'react-native-svg'
+import { SvgProps } from 'react-native-svg'
 
 function AnalysisIcon(props: SvgProps) {
   return (
@@ -17,7 +18,7 @@ function AnalysisIcon(props: SvgProps) {
         fill={props.fill || props.color || 'currentColor'}
       />
     </Svg>
-  );
+  )
 }
 
-export default AnalysisIcon;
+export default AnalysisIcon

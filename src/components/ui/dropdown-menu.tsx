@@ -1,23 +1,26 @@
 import * as React from 'react'
+
 import {
-  Modal,
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  StyleSheet,
   Dimensions,
-  ViewStyle,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
   TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native'
-import { useTheme } from '@/contexts/ThemeContext'
+
 import { Ionicons } from '@expo/vector-icons'
 import Animated, {
-  useAnimatedStyle,
-  withTiming,
-  useSharedValue,
   Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated'
+
+import { useTheme } from '@/contexts/ThemeContext'
 
 // Context for managing dropdown state
 type DropdownMenuContext = {
@@ -27,35 +30,44 @@ type DropdownMenuContext = {
   setSelectedValue: (value: string) => void
 }
 
-const DropdownMenuContext = React.createContext<DropdownMenuContext | null>(null)
+const DropdownMenuContext = React.createContext<DropdownMenuContext | null>(
+  null
+)
 
 // Root component
-export function DropdownMenu({ 
+export function DropdownMenu({
   children,
   defaultValue,
-}: { 
+}: {
   children: React.ReactNode
-  defaultValue?: string 
+  defaultValue?: string
 }) {
   const [open, setOpen] = React.useState(false)
   const [selectedValue, setSelectedValue] = React.useState(defaultValue)
-  
+
   return (
-    <DropdownMenuContext.Provider value={{ open, setOpen, selectedValue, setSelectedValue }}>
+    <DropdownMenuContext.Provider
+      value={{ open, setOpen, selectedValue, setSelectedValue }}
+    >
       {children}
     </DropdownMenuContext.Provider>
   )
 }
 
 // Trigger component
-export function DropdownMenuTrigger({ children }: { children: React.ReactNode }) {
+export function DropdownMenuTrigger({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const context = React.useContext(DropdownMenuContext)
   const { isDark } = useTheme()
-  
-  if (!context) throw new Error('DropdownMenuTrigger must be used within DropdownMenu')
-  
+
+  if (!context)
+    throw new Error('DropdownMenuTrigger must be used within DropdownMenu')
+
   return (
-    <Pressable 
+    <Pressable
       onPress={() => context.setOpen(true)}
       className={`
         flex-row items-center justify-between
@@ -75,12 +87,17 @@ export function DropdownMenuTrigger({ children }: { children: React.ReactNode })
 }
 
 // Content component
-export function DropdownMenuContent({ children }: { children: React.ReactNode }) {
+export function DropdownMenuContent({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const context = React.useContext(DropdownMenuContext)
   const { isDark } = useTheme()
-  
-  if (!context) throw new Error('DropdownMenuContent must be used within DropdownMenu')
-  
+
+  if (!context)
+    throw new Error('DropdownMenuContent must be used within DropdownMenu')
+
   const opacity = useSharedValue(0)
   const scale = useSharedValue(0.95)
 
@@ -96,7 +113,7 @@ export function DropdownMenuContent({ children }: { children: React.ReactNode })
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [{ scale: scale.value }]
+    transform: [{ scale: scale.value }],
   }))
 
   return (
@@ -106,11 +123,11 @@ export function DropdownMenuContent({ children }: { children: React.ReactNode })
       animationType="none"
       onRequestClose={() => context.setOpen(false)}
     >
-      <Pressable 
+      <Pressable
         className="flex-1 bg-black/50"
         onPress={() => context.setOpen(false)}
       >
-        <Animated.View 
+        <Animated.View
           style={[animatedStyle]}
           className={`
             m-2 rounded-lg shadow-lg
@@ -125,13 +142,13 @@ export function DropdownMenuContent({ children }: { children: React.ReactNode })
 }
 
 // Item component
-export function DropdownMenuItem({ 
+export function DropdownMenuItem({
   children,
   value,
   onSelect,
   icon,
   destructive,
-}: { 
+}: {
   children: React.ReactNode
   value?: string
   onSelect?: () => void
@@ -140,8 +157,9 @@ export function DropdownMenuItem({
 }) {
   const context = React.useContext(DropdownMenuContext)
   const { isDark } = useTheme()
-  
-  if (!context) throw new Error('DropdownMenuItem must be used within DropdownMenu')
+
+  if (!context)
+    throw new Error('DropdownMenuItem must be used within DropdownMenu')
 
   const handlePress = () => {
     if (value) {
@@ -166,10 +184,12 @@ export function DropdownMenuItem({
           color={destructive ? '#EF4444' : isDark ? '#F3F4F6' : '#1F2937'}
         />
       )}
-      <Text className={`
+      <Text
+        className={`
         text-body-sm
         ${destructive ? 'text-error' : isDark ? 'text-text-dark' : 'text-text'}
-      `}>
+      `}
+      >
         {children}
       </Text>
     </TouchableOpacity>
@@ -179,25 +199,29 @@ export function DropdownMenuItem({
 // Separator component
 export function DropdownMenuSeparator() {
   const { isDark } = useTheme()
-  
+
   return (
-    <View className={`
+    <View
+      className={`
       h-[1px] mx-3 my-1
       ${isDark ? 'bg-border-dark' : 'bg-border'}
-    `} />
+    `}
+    />
   )
 }
 
 // Label component
 export function DropdownMenuLabel({ children }: { children: React.ReactNode }) {
   const { isDark } = useTheme()
-  
+
   return (
-    <Text className={`
+    <Text
+      className={`
       px-3 py-2 text-body-sm font-inter-medium
       ${isDark ? 'text-text-muted-dark' : 'text-text-muted'}
-    `}>
+    `}
+    >
       {children}
     </Text>
   )
-} 
+}

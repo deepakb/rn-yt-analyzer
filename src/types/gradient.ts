@@ -1,15 +1,15 @@
 export interface GradientConfig {
-  colors: string[];
-  start?: { x: number; y: number };
-  end?: { x: number; y: number };
-  locations?: number[];
+  colors: string[]
+  start?: { x: number; y: number }
+  end?: { x: number; y: number }
+  locations?: number[]
 }
 
 // Base configuration for all gradients
 const baseGradientConfig = {
   start: { x: 0, y: 0 },
   end: { x: 1, y: 1 },
-} as const;
+} as const
 
 export const gradients = {
   primary: {
@@ -42,12 +42,12 @@ export const gradients = {
     colors: ['#2193b0', '#6dd5ed'],
     locations: [0, 1],
   },
-} as const;
+} as const
 
-export type GradientPreset = keyof typeof gradients;
+export type GradientPreset = keyof typeof gradients
 
 export const defaultGradientConfig: GradientConfig = {
   ...baseGradientConfig,
   colors: ['#1E90FF', '#47ADFF'],
   locations: [0, 1],
-};
+}

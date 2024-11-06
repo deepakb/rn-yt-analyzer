@@ -1,16 +1,17 @@
 import * as React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
+
 import {
+  Dimensions,
   Modal,
-  View,
-  Text,
   Pressable,
   StyleSheet,
-  Dimensions,
-  ViewStyle,
+  Text,
   TextStyle,
   TouchableWithoutFeedback,
+  View,
+  ViewStyle,
 } from 'react-native'
-import { useCallback, createContext, useContext, useState } from 'react'
 
 // Context for managing dialog state
 type AlertDialogContext = {
@@ -23,7 +24,7 @@ const AlertDialogContext = createContext<AlertDialogContext | null>(null)
 // Root component
 export function AlertDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
-  
+
   return (
     <AlertDialogContext.Provider value={{ open, setOpen }}>
       {children}
@@ -32,24 +33,30 @@ export function AlertDialog({ children }: { children: React.ReactNode }) {
 }
 
 // Trigger component
-export function AlertDialogTrigger({ children }: { children: React.ReactNode }) {
+export function AlertDialogTrigger({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const context = useContext(AlertDialogContext)
-  
-  if (!context) throw new Error('AlertDialogTrigger must be used within AlertDialog')
-  
-  return (
-    <Pressable onPress={() => context.setOpen(true)}>
-      {children}
-    </Pressable>
-  )
+
+  if (!context)
+    throw new Error('AlertDialogTrigger must be used within AlertDialog')
+
+  return <Pressable onPress={() => context.setOpen(true)}>{children}</Pressable>
 }
 
 // Content component
-export function AlertDialogContent({ children }: { children: React.ReactNode }) {
+export function AlertDialogContent({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const context = useContext(AlertDialogContext)
-  
-  if (!context) throw new Error('AlertDialogContent must be used within AlertDialog')
-  
+
+  if (!context)
+    throw new Error('AlertDialogContent must be used within AlertDialog')
+
   const handleBackdropPress = useCallback(() => {
     context.setOpen(false)
   }, [])
@@ -64,9 +71,7 @@ export function AlertDialogContent({ children }: { children: React.ReactNode }) 
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
         <View style={styles.overlay}>
           <TouchableWithoutFeedback>
-            <View style={styles.content}>
-              {children}
-            </View>
+            <View style={styles.content}>{children}</View>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
@@ -85,7 +90,11 @@ export function AlertDialogTitle({ children }: { children: React.ReactNode }) {
 }
 
 // Description component
-export function AlertDialogDescription({ children }: { children: React.ReactNode }) {
+export function AlertDialogDescription({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return <Text style={styles.description}>{children}</Text>
 }
 
@@ -95,25 +104,25 @@ export function AlertDialogFooter({ children }: { children: React.ReactNode }) {
 }
 
 // Action button component
-export function AlertDialogAction({ 
-  children, 
+export function AlertDialogAction({
+  children,
   onPress,
-  style 
-}: { 
+  style,
+}: {
   children: React.ReactNode
   onPress?: () => void
   style?: ViewStyle
 }) {
   const context = useContext(AlertDialogContext)
-  
+
   const handlePress = () => {
     onPress?.()
     context?.setOpen(false)
   }
 
   return (
-    <Pressable 
-      style={[styles.button, styles.actionButton, style]} 
+    <Pressable
+      style={[styles.button, styles.actionButton, style]}
       onPress={handlePress}
     >
       <Text style={styles.actionButtonText}>{children}</Text>
@@ -122,25 +131,25 @@ export function AlertDialogAction({
 }
 
 // Cancel button component
-export function AlertDialogCancel({ 
+export function AlertDialogCancel({
   children,
   onPress,
-  style
-}: { 
+  style,
+}: {
   children: React.ReactNode
   onPress?: () => void
   style?: ViewStyle
 }) {
   const context = useContext(AlertDialogContext)
-  
+
   const handlePress = () => {
     onPress?.()
     context?.setOpen(false)
   }
 
   return (
-    <Pressable 
-      style={[styles.button, styles.cancelButton, style]} 
+    <Pressable
+      style={[styles.button, styles.cancelButton, style]}
       onPress={handlePress}
     >
       <Text style={styles.cancelButtonText}>{children}</Text>
@@ -210,4 +219,4 @@ const styles = StyleSheet.create({
     color: '#666',
     fontWeight: '500',
   },
-}) 
+})

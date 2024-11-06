@@ -1,20 +1,22 @@
-import React from 'react';
-import { View, Image, Text, ImageSourcePropType } from 'react-native';
-import { GradientBackground } from './gradient-background';
+import React from 'react'
+
+import { Image, ImageSourcePropType, Text, View } from 'react-native'
+
+import { GradientBackground } from './gradient-background'
 
 interface AvatarRootProps {
-  className?: string;
-  children: React.ReactNode;
+  className?: string
+  children: React.ReactNode
 }
 
 interface AvatarImageProps {
-  source: ImageSourcePropType;
-  className?: string;
+  source: ImageSourcePropType
+  className?: string
 }
 
 interface AvatarFallbackProps {
-  initials: string;
-  className?: string;
+  initials: string
+  className?: string
 }
 
 const AvatarRoot = React.forwardRef<View, AvatarRootProps>(
@@ -29,7 +31,7 @@ const AvatarRoot = React.forwardRef<View, AvatarRootProps>(
       {children}
     </View>
   )
-);
+)
 
 const AvatarImage = React.forwardRef<Image, AvatarImageProps>(
   ({ className = '', source }, ref) => (
@@ -40,7 +42,7 @@ const AvatarImage = React.forwardRef<Image, AvatarImageProps>(
       resizeMode="cover"
     />
   )
-);
+)
 
 const AvatarFallback = React.forwardRef<View, AvatarFallbackProps>(
   ({ className = '', initials }, ref) => (
@@ -57,11 +59,11 @@ const AvatarFallback = React.forwardRef<View, AvatarFallbackProps>(
       </Text>
     </GradientBackground>
   )
-);
+)
 
 // Add display names
-AvatarRoot.displayName = 'Avatar';
-AvatarImage.displayName = 'AvatarImage';
-AvatarFallback.displayName = 'AvatarFallback';
+AvatarRoot.displayName = 'Avatar'
+AvatarImage.displayName = 'AvatarImage'
+AvatarFallback.displayName = 'AvatarFallback'
 
-export { AvatarRoot as Avatar, AvatarImage, AvatarFallback };
+export { AvatarRoot as Avatar, AvatarImage, AvatarFallback }

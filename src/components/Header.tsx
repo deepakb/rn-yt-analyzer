@@ -1,27 +1,28 @@
-import { View, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/contexts/ThemeContext';
-import { OrbitLogo } from '@/components/OrbitLogo';
-import { GradientIcon, GradientText } from '@/components/ui';
-import { GradientConfig } from '@/types/gradient';
+import { TouchableOpacity, View } from 'react-native'
+
+import { OrbitLogo } from '@/components/OrbitLogo'
+import { GradientIcon, GradientText } from '@/components/ui'
+import { useTheme } from '@/contexts/ThemeContext'
+import { GradientConfig } from '@/types/gradient'
 
 interface HeaderProps {
-  onNotificationPress?: () => void;
+  onNotificationPress?: () => void
 }
 
 export function Header({ onNotificationPress }: HeaderProps) {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme()
 
   // Theme toggle gradients
   const themeGradient: GradientConfig = {
-    colors: isDark 
+    colors: isDark
       ? ['#FCD34D', '#F59E0B'] // warning gradient for sun
       : ['#2193b0', '#6dd5ed'], // ocean gradient for moon
     start: { x: 0, y: 0 },
-    end: { x: 1, y: 1 }
-  };
+    end: { x: 1, y: 1 },
+  }
 
   return (
-    <View 
+    <View
       className={`
         flex-row items-center justify-between 
         px-lg h-[56px] 
@@ -58,7 +59,7 @@ export function Header({ onNotificationPress }: HeaderProps) {
           accessibilityHint={`Switch to ${isDark ? 'light' : 'dark'} mode`}
         >
           <GradientIcon
-            name={isDark ? "sunny-outline" : "moon-outline"}
+            name={isDark ? 'sunny-outline' : 'moon-outline'}
             size="md"
             gradient={themeGradient}
             className="animate-fade-in"
@@ -66,5 +67,5 @@ export function Header({ onNotificationPress }: HeaderProps) {
         </TouchableOpacity>
       </View>
     </View>
-  );
+  )
 }

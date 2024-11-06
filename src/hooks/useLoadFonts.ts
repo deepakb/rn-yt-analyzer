@@ -4,7 +4,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
   useFonts,
-} from '@expo-google-fonts/inter';
+} from '@expo-google-fonts/inter'
 
 export function useLoadFonts() {
   const [fontsLoaded, fontError] = useFonts({
@@ -12,10 +12,10 @@ export function useLoadFonts() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
-  });
+  })
 
   return {
     fontsLoaded,
     fontError,
-  };
-} 
+  }
+}

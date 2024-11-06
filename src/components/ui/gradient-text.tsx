@@ -1,15 +1,28 @@
-import { Text as RNText, TextProps } from 'react-native';
-import MaskedView from '@react-native-masked-view/masked-view';
-import { LinearGradient } from 'expo-linear-gradient';
-import { GradientConfig, GradientPreset, gradients } from '@/types/gradient';
+import { Text as RNText, TextProps } from 'react-native'
+
+import { LinearGradient } from 'expo-linear-gradient'
+
+import MaskedView from '@react-native-masked-view/masked-view'
+
+import { GradientConfig, GradientPreset, gradients } from '@/types/gradient'
 
 interface GradientTextProps extends TextProps {
-  children: string;
-  gradient: GradientConfig | GradientPreset;
-  variant?: 'display-2xl' | 'display-xl' | 'display-lg' | 'display-md' | 'display-sm' | 'display-xs' | 
-           'body-xl' | 'body-lg' | 'body-md' | 'body-sm' | 'body-xs';
-  weight?: 'regular' | 'medium' | 'semibold' | 'bold';
-  className?: string;
+  children: string
+  gradient: GradientConfig | GradientPreset
+  variant?:
+    | 'display-2xl'
+    | 'display-xl'
+    | 'display-lg'
+    | 'display-md'
+    | 'display-sm'
+    | 'display-xs'
+    | 'body-xl'
+    | 'body-lg'
+    | 'body-md'
+    | 'body-sm'
+    | 'body-xs'
+  weight?: 'regular' | 'medium' | 'semibold' | 'bold'
+  className?: string
 }
 
 const fontWeightClasses = {
@@ -17,26 +30,25 @@ const fontWeightClasses = {
   medium: 'font-inter-medium',
   semibold: 'font-inter-semibold',
   bold: 'font-inter-bold',
-} as const;
+} as const
 
-export function GradientText({ 
-  children, 
+export function GradientText({
+  children,
   gradient,
   variant = 'body-md',
   weight = 'regular',
   className = '',
-  ...props 
+  ...props
 }: GradientTextProps) {
-  const gradientConfig = typeof gradient === 'string' 
-    ? gradients[gradient] 
-    : gradient;
+  const gradientConfig =
+    typeof gradient === 'string' ? gradients[gradient] : gradient
 
   const baseClasses = [
     `text-${variant}`,
     fontWeightClasses[weight],
     'text-text dark:text-text-dark',
-    className
-  ].join(' ');
+    className,
+  ].join(' ')
 
   const variantSizes = {
     'display-2xl': 72,
@@ -50,16 +62,16 @@ export function GradientText({
     'body-md': 16,
     'body-sm': 14,
     'body-xs': 12,
-  } as const;
+  } as const
 
-  const fontSize = variantSizes[variant];
+  const fontSize = variantSizes[variant]
 
   return (
     <MaskedView
       maskElement={
-        <RNText 
+        <RNText
           className={baseClasses}
-          style={{ 
+          style={{
             backgroundColor: 'transparent',
             fontSize,
             lineHeight: fontSize * 1.5,
@@ -77,18 +89,18 @@ export function GradientText({
         locations={gradientConfig.locations}
         className="animate-gradient-x"
       >
-        <RNText 
+        <RNText
           className={baseClasses}
-          style={{ 
+          style={{
             opacity: 0,
             fontSize,
             lineHeight: fontSize * 1.5,
-          }} 
+          }}
           {...props}
         >
           {children}
         </RNText>
       </LinearGradient>
     </MaskedView>
-  );
-} 
+  )
+}

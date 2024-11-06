@@ -1,11 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: [
-    "./app/**/*.{js,jsx,ts,tsx}",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  presets: [require("nativewind/preset")],
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
+  presets: [require('nativewind/preset')],
   theme: {
     extend: {
       // Color System
@@ -101,10 +98,22 @@ module.exports = {
 
       // Typography System - Adjust for Mobile
       fontSize: {
-        'display-2xl': ['2.75rem', { lineHeight: '3.25rem', letterSpacing: '-0.02em' }],
-        'display-xl': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.02em' }],
-        'display-lg': ['2rem', { lineHeight: '2.5rem', letterSpacing: '-0.02em' }],
-        'display-md': ['1.75rem', { lineHeight: '2.125rem', letterSpacing: '-0.02em' }],
+        'display-2xl': [
+          '2.75rem',
+          { lineHeight: '3.25rem', letterSpacing: '-0.02em' },
+        ],
+        'display-xl': [
+          '2.25rem',
+          { lineHeight: '2.75rem', letterSpacing: '-0.02em' },
+        ],
+        'display-lg': [
+          '2rem',
+          { lineHeight: '2.5rem', letterSpacing: '-0.02em' },
+        ],
+        'display-md': [
+          '1.75rem',
+          { lineHeight: '2.125rem', letterSpacing: '-0.02em' },
+        ],
         'display-sm': ['1.5rem', { lineHeight: '2rem' }],
         'display-xs': ['1.25rem', { lineHeight: '1.75rem' }],
         'body-xl': ['1.125rem', { lineHeight: '1.75rem' }],
@@ -124,35 +133,35 @@ module.exports = {
 
       // Spacing System - Compact for Mobile
       spacing: {
-        '4xs': '0.125rem',  // 2px
-        '3xs': '0.25rem',   // 4px
-        '2xs': '0.375rem',  // 6px
-        'xs': '0.5rem',     // 8px
-        'sm': '0.75rem',    // 12px
-        'md': '0.875rem',   // 14px (reduced for mobile)
-        'lg': '1rem',       // 16px
-        'xl': '1.25rem',    // 20px
-        '2xl': '1.5rem',    // 24px
+        '4xs': '0.125rem', // 2px
+        '3xs': '0.25rem', // 4px
+        '2xs': '0.375rem', // 6px
+        xs: '0.5rem', // 8px
+        sm: '0.75rem', // 12px
+        md: '0.875rem', // 14px (reduced for mobile)
+        lg: '1rem', // 16px
+        xl: '1.25rem', // 20px
+        '2xl': '1.5rem', // 24px
       },
 
       // Border Radius - Rounder for Mobile
       borderRadius: {
-        'none': '0',
-        'xs': '0.25rem',    // 4px
-        'sm': '0.375rem',   // 6px
-        'md': '0.5rem',     // 8px
-        'lg': '0.75rem',    // 12px
-        'xl': '1rem',       // 16px
-        '2xl': '1.5rem',    // 24px
-        'full': '9999px',
+        none: '0',
+        xs: '0.25rem', // 4px
+        sm: '0.375rem', // 6px
+        md: '0.5rem', // 8px
+        lg: '0.75rem', // 12px
+        xl: '1rem', // 16px
+        '2xl': '1.5rem', // 24px
+        full: '9999px',
       },
 
       // Shadows - Subtle for Mobile
       boxShadow: {
-        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'md': '0 3px 5px -2px rgba(0, 0, 0, 0.1), 0 1px 3px -1px rgba(0, 0, 0, 0.06)',
-        'lg': '0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 3px 5px -2px rgba(0, 0, 0, 0.05)',
-        'xl': '0 16px 20px -6px rgba(0, 0, 0, 0.1), 0 5px 7px -3px rgba(0, 0, 0, 0.04)',
+        sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        md: '0 3px 5px -2px rgba(0, 0, 0, 0.1), 0 1px 3px -1px rgba(0, 0, 0, 0.06)',
+        lg: '0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 3px 5px -2px rgba(0, 0, 0, 0.05)',
+        xl: '0 16px 20px -6px rgba(0, 0, 0, 0.1), 0 5px 7px -3px rgba(0, 0, 0, 0.04)',
       },
 
       // Animations - Subtle & Optimized
@@ -184,4 +193,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}

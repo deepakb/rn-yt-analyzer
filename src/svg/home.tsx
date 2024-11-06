@@ -1,6 +1,7 @@
-import * as React from 'react';
-import Svg, { Path } from 'react-native-svg';
-import { SvgProps } from 'react-native-svg';
+import * as React from 'react'
+
+import Svg, { Path } from 'react-native-svg'
+import { SvgProps } from 'react-native-svg'
 
 function HomeIcon(props: SvgProps) {
   return (
@@ -17,7 +18,7 @@ function HomeIcon(props: SvgProps) {
         fill={props.fill || props.color || 'currentColor'}
       />
     </Svg>
-  );
+  )
 }
 
-export default HomeIcon;
+export default HomeIcon
