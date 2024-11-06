@@ -4,16 +4,18 @@ import { ScrollView, Text, View } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 
-import {
-  Badge,
+import { Badge } from '@/components/ui/badge'
+import { 
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-  Calendar,
-  DateRange,
+  BreadcrumbSeparator 
+} from '@/components/ui/breadcrumb'
+import { Calendar } from '@/components/ui/calendar'
+import { type DateRange } from '@/components/ui/calendar'
+import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -24,10 +26,14 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu'
+import { 
   GradientBackground,
-  GradientPreset,
-  GradientText,
+  type GradientPreset,
+  GradientText 
+} from '@/components/ui'
+import { 
   Sheet,
   SheetContent,
   SheetDescription,

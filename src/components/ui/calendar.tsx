@@ -16,7 +16,7 @@ import {
 
 import { useTheme } from '@/contexts/ThemeContext'
 
-interface DateRange {
+export interface DateRange {
   from: Date
   to?: Date
 }
