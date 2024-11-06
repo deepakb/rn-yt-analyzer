@@ -1,59 +1,87 @@
-import { RecoilRoot } from 'recoil';
-import { StatusBar } from 'expo-status-bar';
-import TabNavigator from '@/navigation/TabNavigator';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { View, StyleSheet } from 'react-native';
-import { Colors } from '@/constants/colors';
-import {
-  useFonts,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-} from '@expo-google-fonts/inter';
-import * as SplashScreen from 'expo-splash-screen';
-import { useCallback } from 'react';
+import { useEffect } from 'react'
 
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
+import { View } from 'react-native'
 
-export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
+import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+import { Header } from '@/components/Header'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import { useTheme } from '@/contexts/ThemeContext'
+import { useLoadFonts } from '@/hooks/useLoadFonts'
+
+import '../global.css'
+
+// Keep splash screen visible while fonts are loading
+SplashScreen.preventAutoHideAsync()
+
+// Create a themed container component
+function ThemedContainer({ children }: { children: React.ReactNode }) {
+  const { isDark } = useTheme()
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <StatusBar 
-          style="light" 
-          backgroundColor="transparent" 
-          translucent 
-        />
-        <RecoilRoot>
-          <TabNavigator />
-        </RecoilRoot>
-      </View>
+      <StatusBar
+        style={isDark ? 'light' : 'dark'}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <SafeAreaView
+        className={`flex-1 ${isDark ? 'bg-background-dark' : 'bg-background'}`}
+        edges={['top']}
+      >
+        {children}
+      </SafeAreaView>
     </SafeAreaProvider>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background.light,
-  },
-});
+export default function RootLayout() {
+  const { fontsLoaded, fontError } = useLoadFonts()
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded, fontError])
+
+  if (!fontsLoaded && !fontError) {
+    return null
+  }
+
+  return (
+    <ThemeProvider>
+      <ThemedContainer>
+        <NavigationContainer independent={true}>
+          <Stack
+            screenOptions={{
+              header: () => (
+                <Header
+                  onNotificationPress={() =>
+                    console.log('Notification pressed')
+                  }
+                />
+              ),
+              headerShown: true,
+              contentStyle: {
+                paddingBottom: 0,
+              },
+              animation: 'slide_from_right',
+            }}
+          >
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: true,
+              }}
+            />
+          </Stack>
+        </NavigationContainer>
+      </ThemedContainer>
+    </ThemeProvider>
+  )
+}
