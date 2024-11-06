@@ -25,7 +25,6 @@ import {
   GradientPreset,
   GradientText,
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -375,122 +374,121 @@ export default function DesignSystemShowcase() {
           </Sheet>
         </View>
 
+        {/* Dropdown Menu Section */}
+        <SectionTitle>Dropdown Menu</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Text>Options</Text>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                icon="copy-outline"
+                onSelect={() => console.log('Copy')}
+              >
+                Copy
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                icon="share-outline"
+                onSelect={() => console.log('Share')}
+              >
+                Share
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                icon="trash-outline"
+                onSelect={() => console.log('Delete')}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </View>
 
-          {/* Dropdown Menu Section */}
-<SectionTitle>Dropdown Menu</SectionTitle>
-<View className="flex-row flex-wrap justify-between mb-8">
-  <DropdownMenu>
-    <DropdownMenuTrigger>
-      <Text className="text-base">Options</Text>
-    </DropdownMenuTrigger>
+        <View className="h-16 bg-primary" />
 
-    <DropdownMenuContent>
-      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      <DropdownMenuItem
-        icon="copy-outline"
-        onSelect={() => console.log('Copy')}
-      >
-        <Text>Copy</Text>
-      </DropdownMenuItem>
-      <DropdownMenuItem
-        icon="share-outline"
-        onSelect={() => console.log('Share')}
-      >
-        <Text>Share</Text>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem
-        icon="trash-outline"
-        onSelect={() => console.log('Delete')}
-      >
-        <Text className="text-destructive dark:text-destructive-dark">Delete</Text>
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</View>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <Text>Open</Text>
+            </Button>
+          </DropdownMenuTrigger>
 
-<View className="h-16 bg-primary" />
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
 
-<DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">
-      <Text>Open</Text>
-    </Button>
-  </DropdownMenuTrigger>
-  
-  <DropdownMenuContent>
-    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    
-    <DropdownMenuGroup>
-      <DropdownMenuItem 
-        icon="person-outline" 
-        onSelect={() => console.log('profile')}
-      >
-        <Text>Profile</Text>
-        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-      </DropdownMenuItem>
-      
-      <DropdownMenuItem 
-        icon="card-outline" 
-        onSelect={() => console.log('billing')}
-      >
-        <Text>Billing</Text>
-        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-      </DropdownMenuItem>
-      
-      <DropdownMenuItem 
-        icon="settings-outline" 
-        onSelect={() => console.log('settings')}
-      >
-        <Text>Settings</Text>
-        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-      </DropdownMenuItem>
-    </DropdownMenuGroup>
-    
-    <DropdownMenuSeparator />
-    
-    <DropdownMenuGroup>
-      <DropdownMenuItem 
-        icon="people-outline" 
-        onSelect={() => console.log('team')}
-      >
-        <Text>Team</Text>
-      </DropdownMenuItem>
-      
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger icon="person-add-outline">
-          <Text>Invite users</Text>
-        </DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
-          <DropdownMenuItem 
-            icon="mail-outline" 
-            onSelect={() => console.log('email')}
-          >
-            <Text>Email</Text>
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            icon="chatbox-outline" 
-            onSelect={() => console.log('message')}
-          >
-            <Text>Message</Text>
-          </DropdownMenuItem>
-        </DropdownMenuSubContent>
-      </DropdownMenuSub>
-    </DropdownMenuGroup>
-    
-    <DropdownMenuSeparator />
-    
-    <DropdownMenuItem 
-      icon="log-out-outline" 
-      onSelect={() => console.log('logout')}
-    >
-      <Text className="text-destructive dark:text-destructive-dark">Log out</Text>
-      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-    </DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
-        
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                icon="person-outline"
+                onSelect={() => console.log('profile')}
+              >
+                <Text>Profile</Text>
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                icon="card-outline"
+                onSelect={() => console.log('billing')}
+              >
+                <Text>Billing</Text>
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                icon="settings-outline"
+                onSelect={() => console.log('settings')}
+              >
+                <Text>Settings</Text>
+                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                icon="people-outline"
+                onSelect={() => console.log('team')}
+              >
+                <Text>Team</Text>
+              </DropdownMenuItem>
+
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger icon="person-add-outline">
+                  <Text>Invite users</Text>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    icon="mail-outline"
+                    onSelect={() => console.log('email')}
+                  >
+                    <Text>Email</Text>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    icon="chatbox-outline"
+                    onSelect={() => console.log('message')}
+                  >
+                    <Text>Message</Text>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              icon="log-out-outline"
+              onSelect={() => console.log('logout')}
+            >
+              <Text className="text-destructive dark:text-destructive-dark">
+                Log out
+              </Text>
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </View>
     </ScrollView>
   )
