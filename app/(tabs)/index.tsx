@@ -120,6 +120,7 @@ function ColorCircle({
 export default function DesignSystemShowcase() {
   const { isDark } = useTheme()
   const { toast } = useToast()
+  const [checked, setChecked] = useState(false);
 
   // Single date selection
   const [date, setDate] = useState<Date>()
@@ -155,7 +156,10 @@ export default function DesignSystemShowcase() {
         {/* Label and checkbox Section */}
         <SectionTitle>Label and Checkbox</SectionTitle>
         <View className="flex-row items-center flex-wrap mb-8">
-          <Checkbox />
+        <Checkbox 
+    checked={checked} 
+    onCheckedChange={setChecked}
+  />
           <Label>Label</Label>
         </View>
 

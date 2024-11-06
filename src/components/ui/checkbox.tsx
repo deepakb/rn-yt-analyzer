@@ -2,22 +2,21 @@ import * as React from "react";
 import {
   TouchableOpacity,
   View,
-  StyleSheet,
-  ViewStyle,
   Animated,
   Easing,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { cn } from "@/lib/utils";
 
 export interface CheckboxProps {
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
-  style?: ViewStyle;
+  className?: string;
 }
 
 const Checkbox = React.forwardRef<TouchableOpacity, CheckboxProps>(
-  ({ checked = false, onCheckedChange, disabled = false, style }, ref) => {
+  ({ checked = false, onCheckedChange, disabled = false, className }, ref) => {
     const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
     React.useEffect(() => {
@@ -38,30 +37,28 @@ const Checkbox = React.forwardRef<TouchableOpacity, CheckboxProps>(
             onCheckedChange(!checked);
           }
         }}
-        style={[styles.container, style]}
+        className={cn("p-0.5", className)}
       >
         <View
-          style={[
-            styles.checkbox,
-            checked && styles.checked,
-            disabled && styles.disabled,
-          ]}
+          className={cn(
+            "w-4 h-4 rounded border border-primary bg-transparent items-center justify-center",
+            checked && "bg-primary",
+            disabled && "opacity-50"
+          )}
         >
           <Animated.View
-            style={[
-              styles.checkmarkContainer,
-              {
-                opacity: fadeAnim,
-                transform: [
-                  {
-                    scale: fadeAnim.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0.8, 1],
-                    }),
-                  },
-                ],
-              },
-            ]}
+            style={{
+              opacity: fadeAnim,
+              transform: [
+                {
+                  scale: fadeAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.8, 1],
+                  }),
+                },
+              ],
+            }}
+            className="flex-1 items-center justify-center"
           >
             {checked && (
               <Ionicons 
@@ -76,33 +73,6 @@ const Checkbox = React.forwardRef<TouchableOpacity, CheckboxProps>(
     );
   }
 );
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 2,
-  },
-  checkbox: {
-    width: 16,
-    height: 16,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "#000", // border-primary
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  checked: {
-    backgroundColor: "#000", // bg-primary
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-  checkmarkContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 Checkbox.displayName = "Checkbox";
 
