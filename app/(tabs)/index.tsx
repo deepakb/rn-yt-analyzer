@@ -29,9 +29,11 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu'
 import { 
+  Checkbox,
   GradientBackground,
   type GradientPreset,
-  GradientText 
+  GradientText, 
+  Label
 } from '@/components/ui'
 import { 
   Sheet,
@@ -149,6 +151,13 @@ export default function DesignSystemShowcase() {
       showsVerticalScrollIndicator={true}
     >
       <View className="px-4 py-6">
+
+        {/* Label and checkbox Section */}
+        <SectionTitle>Label and Checkbox</SectionTitle>
+        <View className="flex-row items-center flex-wrap mb-8">
+          <Checkbox />
+          <Label>Label</Label>
+        </View>
 
       <View className="flex-1 items-center justify-center p-4">
         <CardDemo />
