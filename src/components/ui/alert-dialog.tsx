@@ -5,13 +5,11 @@ import {
   Dimensions,
   Modal,
   Pressable,
-  StyleSheet,
   Text,
-  TextStyle,
   TouchableWithoutFeedback,
   View,
-  ViewStyle,
 } from 'react-native'
+import { cn } from "@/lib/utils"
 
 // Context for managing dialog state
 type AlertDialogContext = {
@@ -69,9 +67,11 @@ export function AlertDialogContent({
       onRequestClose={handleBackdropPress}
     >
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
-        <View style={styles.overlay}>
+        <View className="flex-1 bg-black/50 justify-center items-center">
           <TouchableWithoutFeedback>
-            <View style={styles.content}>{children}</View>
+            <View className="bg-white rounded-lg p-4 w-[85%] max-w-[500px] shadow-lg">
+              {children}
+            </View>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
@@ -81,12 +81,12 @@ export function AlertDialogContent({
 
 // Header component
 export function AlertDialogHeader({ children }: { children: React.ReactNode }) {
-  return <View style={styles.header}>{children}</View>
+  return <View className="mb-4">{children}</View>
 }
 
 // Title component
 export function AlertDialogTitle({ children }: { children: React.ReactNode }) {
-  return <Text style={styles.title}>{children}</Text>
+  return <Text className="text-lg font-semibold mb-2">{children}</Text>
 }
 
 // Description component
@@ -95,23 +95,23 @@ export function AlertDialogDescription({
 }: {
   children: React.ReactNode
 }) {
-  return <Text style={styles.description}>{children}</Text>
+  return <Text className="text-sm text-gray-500 leading-5">{children}</Text>
 }
 
 // Footer component
 export function AlertDialogFooter({ children }: { children: React.ReactNode }) {
-  return <View style={styles.footer}>{children}</View>
+  return <View className="mt-6 flex-row justify-end gap-2">{children}</View>
 }
 
 // Action button component
 export function AlertDialogAction({
   children,
   onPress,
-  style,
+  className,
 }: {
   children: React.ReactNode
   onPress?: () => void
-  style?: ViewStyle
+  className?: string
 }) {
   const context = useContext(AlertDialogContext)
 
@@ -122,10 +122,13 @@ export function AlertDialogAction({
 
   return (
     <Pressable
-      style={[styles.button, styles.actionButton, style]}
+      className={cn(
+        "py-2 px-4 rounded min-w-[80px] items-center bg-primary",
+        className
+      )}
       onPress={handlePress}
     >
-      <Text style={styles.actionButtonText}>{children}</Text>
+      <Text className="text-primary-foreground font-medium">{children}</Text>
     </Pressable>
   )
 }
@@ -134,11 +137,11 @@ export function AlertDialogAction({
 export function AlertDialogCancel({
   children,
   onPress,
-  style,
+  className,
 }: {
   children: React.ReactNode
   onPress?: () => void
-  style?: ViewStyle
+  className?: string
 }) {
   const context = useContext(AlertDialogContext)
 
@@ -149,74 +152,13 @@ export function AlertDialogCancel({
 
   return (
     <Pressable
-      style={[styles.button, styles.cancelButton, style]}
+      className={cn(
+        "py-2 px-4 rounded min-w-[80px] items-center bg-secondary",
+        className
+      )}
       onPress={handlePress}
     >
-      <Text style={styles.cancelButtonText}>{children}</Text>
+      <Text className="text-secondary-foreground font-medium">{children}</Text>
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 16,
-    width: Dimensions.get('window').width * 0.85,
-    maxWidth: 500,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  header: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-  footer: {
-    marginTop: 24,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 8,
-  },
-  button: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    minWidth: 80,
-    alignItems: 'center',
-  },
-  actionButton: {
-    backgroundColor: '#2196F3',
-  },
-  actionButtonText: {
-    color: 'white',
-    fontWeight: '500',
-  },
-  cancelButton: {
-    backgroundColor: '#f5f5f5',
-  },
-  cancelButtonText: {
-    color: '#666',
-    fontWeight: '500',
-  },
-})
