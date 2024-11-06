@@ -148,8 +148,9 @@ type Toast = Omit<ToastProps, "id">
 
 function toast({ ...props }: Toast) {
   const id = genId()
-  console.log('Creating toast with id:', id, 'props:', props)
-
+  
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+  
   dispatch({
     type: "ADD_TOAST",
     toast: {
@@ -157,13 +158,28 @@ function toast({ ...props }: Toast) {
       id,
       open: true,
       onOpenChange: (open) => {
-        console.log('Toast open change:', id, open)
         if (!open) {
-          dispatch({ type: "DISMISS_TOAST", toastId: id })
+          dismiss()
         }
+        props.onOpenChange?.(open)
       },
     },
   })
+
+  // Auto dismiss after duration
+  if (props.duration !== Infinity) {
+    setTimeout(dismiss, props.duration || 5000)
+  }
+
+  return {
+    id,
+    dismiss,
+    update: (props: ToasterToast) =>
+      dispatch({
+        type: "UPDATE_TOAST",
+        toast: { ...props, id },
+      }),
+  }
 }
 
 export function useToast() {

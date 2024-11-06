@@ -21,19 +21,56 @@ export function Toast({
 }: ToastViewProps) {
   const { isDark } = useTheme()
   const insets = useSafeAreaInsets()
-  
-  console.log('Toast rendering:', { title, open }) // Debug log
+  const opacity = React.useRef(new Animated.Value(0)).current
+  const translateY = React.useRef(new Animated.Value(-100)).current
+
+  React.useEffect(() => {
+    if (open) {
+      Animated.parallel([
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.spring(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+        }),
+      ]).start()
+    } else {
+      Animated.parallel([
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: -100,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+      ]).start()
+    }
+  }, [open])
+
+  const handleClose = React.useCallback(() => {
+    if (onOpenChange) {
+      onOpenChange(false)
+    }
+  }, [onOpenChange])
 
   return (
-    <View
+    <Animated.View
       style={{
         position: "absolute",
         top: insets.top + 10,
         left: 20,
         right: 20,
-        width: SCREEN_WIDTH - 40, // Explicit width
+        width: SCREEN_WIDTH - 40,
+        opacity,
+        transform: [{ translateY }],
         zIndex: 9999,
-        alignSelf: 'center', // Center horizontally
+        alignSelf: 'center',
       }}
     >
       <View
@@ -75,19 +112,17 @@ export function Toast({
             )}
           </View>
           
-          {onOpenChange && (
-            <TouchableOpacity
-              onPress={() => onOpenChange(false)}
-              className="p-2 ml-2"
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <Ionicons
-                name="close"
-                size={20}
-                color={isDark ? "#E5E7EB" : "#374151"}
-              />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            onPress={handleClose}
+            className="p-2 ml-2"
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Ionicons
+              name="close"
+              size={20}
+              color={isDark ? "#E5E7EB" : "#374151"}
+            />
+          </TouchableOpacity>
         </View>
         {action && (
           <View className="px-4 pb-4 flex-row justify-end">
@@ -95,6 +130,6 @@ export function Toast({
           </View>
         )}
       </View>
-    </View>
+    </Animated.View>
   )
 } 

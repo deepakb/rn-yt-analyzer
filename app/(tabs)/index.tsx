@@ -595,15 +595,161 @@ export default function DesignSystemShowcase() {
         {/* Toast Section */}
         <SectionTitle>Toast</SectionTitle>
         <View className="space-y-4 mb-8">
-          {/* Simplified Toast Section for testing */}
+          {/* Default Toast */}
           <Button
-            variant="default"
+            variant="outline"
             onPress={() => {
-              console.log('Button pressed') // Debug log
-              showToast()
+              toast({
+                title: "Scheduled: Catch up",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+                action: (
+                  <ToastAction 
+                    altText="Goto schedule to undo"
+                    onPress={() => console.log("Undo pressed")}
+                  >
+                    Undo
+                  </ToastAction>
+                ),
+              })
             }}
           >
-            <Text className="text-white">Show Test Toast</Text>
+            <Text className="text-text dark:text-text-dark">Default Toast with Action</Text>
+          </Button>
+
+          {/* Success Toast */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                title: "Success!",
+                description: "Your changes have been saved successfully.",
+                variant: "success",
+                action: (
+                  <ToastAction 
+                    altText="Dismiss message"
+                    onPress={() => console.log("Dismissed")}
+                  >
+                    Dismiss
+                  </ToastAction>
+                ),
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Success Toast</Text>
+          </Button>
+
+          {/* Error Toast */}
+          <Button
+            variant="destructive"
+            onPress={() => {
+              toast({
+                title: "Error",
+                description: "Something went wrong. Please try again later.",
+                variant: "destructive",
+                action: (
+                  <ToastAction 
+                    altText="Try again"
+                    onPress={() => console.log("Retry")}
+                  >
+                    Retry
+                  </ToastAction>
+                ),
+              })
+            }}
+          >
+            <Text className="text-white">Error Toast</Text>
+          </Button>
+
+          {/* Long Duration Toast */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                title: "Download Started",
+                description: "Your file is being downloaded. This might take a while.",
+                duration: 10000, // 10 seconds
+                action: (
+                  <ToastAction 
+                    altText="Cancel download"
+                    onPress={() => console.log("Download cancelled")}
+                  >
+                    Cancel
+                  </ToastAction>
+                ),
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Long Duration Toast</Text>
+          </Button>
+
+          {/* Simple Toast without Action */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                title: "Note",
+                description: "This is a simple notification without any action.",
+                duration: 3000,
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Simple Toast</Text>
+          </Button>
+
+          {/* Title-only Toast */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                title: "Copied to clipboard",
+                duration: 2000,
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Title-only Toast</Text>
+          </Button>
+
+          {/* Description-only Toast */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                description: "Your session will expire in 5 minutes.",
+                duration: 5000,
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Description-only Toast</Text>
+          </Button>
+
+          {/* Multiple Action Toast */}
+          <Button
+            variant="outline"
+            onPress={() => {
+              toast({
+                title: "Update Available",
+                description: "A new version is available. Would you like to update now?",
+                duration: 8000,
+                action: (
+                  <View className="flex-row space-x-2">
+                    <ToastAction 
+                      altText="Update now"
+                      onPress={() => console.log("Update now")}
+                    >
+                      Update
+                    </ToastAction>
+                    <ToastAction 
+                      altText="Update later"
+                      onPress={() => console.log("Update later")}
+                    >
+                      Later
+                    </ToastAction>
+                  </View>
+                ),
+              })
+            }}
+          >
+            <Text className="text-text dark:text-text-dark">Multiple Actions Toast</Text>
           </Button>
         </View>
       </View>
