@@ -63,9 +63,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Button from '@/components/ui/button'
 import { useTheme } from '@/contexts/ThemeContext'
-import { Toaster } from '@/components/ui/toaster'
 import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from '@/components/ui/toast-action'
+import { CardDemo } from '@/components/CardDemo'
 
 const items = [
   { href: '#', label: 'Home' },
@@ -149,6 +149,10 @@ export default function DesignSystemShowcase() {
       showsVerticalScrollIndicator={true}
     >
       <View className="px-4 py-6">
+
+      <View className="flex-1 items-center justify-center p-4">
+        <CardDemo />
+      </View>
         {/* Typography Section */}
         <SectionTitle>Typography</SectionTitle>
         <View className="space-y-4 mb-8">
