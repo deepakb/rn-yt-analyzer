@@ -57,6 +57,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Button from '@/components/ui/button'
 import { useTheme } from '@/contexts/ThemeContext'
+import { Toaster } from '@/components/ui/toaster'
+import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from '@/components/ui/toast-action'
 
 const items = [
   { href: '#', label: 'Home' },
@@ -108,6 +111,7 @@ function ColorCircle({
 
 export default function DesignSystemShowcase() {
   const { isDark } = useTheme()
+  const { toast } = useToast()
 
   // Single date selection
   const [date, setDate] = useState<Date>()
@@ -119,6 +123,17 @@ export default function DesignSystemShowcase() {
   const handleDelete = () => {
     // Handle delete action
     console.log('Deleted')
+  }
+
+  // Add this function to test toast
+  const showToast = () => {
+    console.log('Showing toast...') // Debug log
+    toast({
+      title: "Test Toast",
+      description: "This is a test toast message",
+      duration: 3000,
+      variant: "default",
+    })
   }
 
   return (
@@ -576,6 +591,21 @@ export default function DesignSystemShowcase() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {/* Toast Section */}
+        <SectionTitle>Toast</SectionTitle>
+        <View className="space-y-4 mb-8">
+          {/* Simplified Toast Section for testing */}
+          <Button
+            variant="default"
+            onPress={() => {
+              console.log('Button pressed') // Debug log
+              showToast()
+            }}
+          >
+            <Text className="text-white">Show Test Toast</Text>
+          </Button>
+        </View>
       </View>
 
       {/* Calendar Section */}

@@ -9,6 +9,7 @@ export type ToastProps = {
   variant?: "default" | "destructive" | "success"
   action?: React.ReactNode
   open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const TOAST_LIMIT = Platform.OS === 'ios' ? 1 : 3
@@ -137,17 +138,17 @@ let memoryState: State = { toasts: [] }
 
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
+  console.log('Toast state updated:', memoryState)
   listeners.forEach((listener) => {
     listener(memoryState)
   })
 }
 
-type Toast = Omit<ToasterToast, "id">
+type Toast = Omit<ToastProps, "id">
 
 function toast({ ...props }: Toast) {
   const id = genId()
-
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+  console.log('Creating toast with id:', id, 'props:', props)
 
   dispatch({
     type: "ADD_TOAST",
@@ -156,31 +157,20 @@ function toast({ ...props }: Toast) {
       id,
       open: true,
       onOpenChange: (open) => {
-        if (!open) dismiss()
+        console.log('Toast open change:', id, open)
+        if (!open) {
+          dispatch({ type: "DISMISS_TOAST", toastId: id })
+        }
       },
     },
   })
-
-  // Auto-dismiss after duration
-  if (props.duration !== Infinity) {
-    setTimeout(dismiss, props.duration || TOAST_REMOVE_DELAY)
-  }
-
-  return {
-    id,
-    dismiss,
-    update: (props: ToasterToast) =>
-      dispatch({
-        type: "UPDATE_TOAST",
-        toast: { ...props, id },
-      }),
-  }
 }
 
 export function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
   React.useEffect(() => {
+    console.log('useToast effect, current state:', state)
     listeners.push(setState)
     return () => {
       const index = listeners.indexOf(setState)

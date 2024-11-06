@@ -13,6 +13,7 @@ import { Header } from '@/components/Header'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useLoadFonts } from '@/hooks/useLoadFonts'
+import { Toaster } from '@/components/ui/toaster'
 
 import '../global.css'
 
@@ -81,6 +82,7 @@ export default function RootLayout() {
             />
           </Stack>
         </NavigationContainer>
+        <Toaster />
       </ThemedContainer>
     </ThemeProvider>
   )
