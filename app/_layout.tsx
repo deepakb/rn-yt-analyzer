@@ -6,7 +6,6 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 
-import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 import { Header } from '@/components/Header'
@@ -57,31 +56,29 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <ThemedContainer>
-        <NavigationContainer independent={true}>
-          <Stack
-            screenOptions={{
-              header: () => (
-                <Header
-                  onNotificationPress={() =>
-                    console.log('Notification pressed')
-                  }
-                />
-              ),
+        <Stack
+          screenOptions={{
+            header: () => (
+              <Header
+                onNotificationPress={() =>
+                  console.log('Notification pressed')
+                }
+              />
+            ),
+            headerShown: true,
+            contentStyle: {
+              paddingBottom: 0,
+            },
+            animation: 'slide_from_right',
+          }}
+        >
+          <Stack.Screen
+            name="(tabs)"
+            options={{
               headerShown: true,
-              contentStyle: {
-                paddingBottom: 0,
-              },
-              animation: 'slide_from_right',
             }}
-          >
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                headerShown: true,
-              }}
-            />
-          </Stack>
-        </NavigationContainer>
+          />
+        </Stack>
         <Toaster />
       </ThemedContainer>
     </ThemeProvider>

@@ -1,28 +1,28 @@
 import * as React from "react";
-import { Text, StyleSheet, TextProps } from "react-native";
+import { Text } from "react-native";
+import { cn } from "../../lib/utils";
 
-export interface LabelProps extends TextProps {
+export interface LabelProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
 const Label = React.forwardRef<Text, LabelProps>(
-  ({ style, children, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
-      <Text ref={ref} style={[styles.label, style]} {...props}>
+      <Text 
+        ref={ref} 
+        className={cn(
+          "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+          className
+        )}
+        {...props}
+      >
         {children}
       </Text>
     );
   }
 );
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 14, // equivalent to text-sm
-    fontWeight: "500", // equivalent to font-medium
-    lineHeight: 16, // appropriate leading for mobile
-    opacity: 1,
-  },
-});
 
 Label.displayName = "Label";
 
