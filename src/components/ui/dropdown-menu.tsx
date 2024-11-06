@@ -253,9 +253,7 @@ export function DropdownMenuContent({
           `}
         >
           <View onLayout={handleLayout} className="p-1">
-            <View onLayout={handleChildrenLayout}>
-              {children}
-            </View>
+            <View onLayout={handleChildrenLayout}>{children}</View>
           </View>
         </View>
       </Pressable>
@@ -414,22 +412,22 @@ export function DropdownMenuSubTrigger({
   const { isDark } = useTheme()
   const context = React.useContext(SubMenuContext)
   const triggerRef = React.useRef<View>(null)
-  
+
   const handlePress = () => {
     if (!context || !triggerRef.current) return
-    
+
     // Log for debugging
     console.log('SubMenu Trigger Pressed')
-    
+
     triggerRef.current.measureInWindow((x, y, width, height) => {
       // Log measurements
       console.log('Measurements:', { x, y, width, height })
-      
+
       context.setPosition({
         x,
         y,
         width,
-        height
+        height,
       })
       context.setIsOpen(true)
     })
@@ -479,10 +477,11 @@ export function DropdownMenuSubContent({
   const context = React.useContext(SubMenuContext)
   const { isDark } = useTheme()
   const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
-  const [contentSize, setContentSize] = React.useState<ContentMeasurements | null>(null)
-  
+  const [contentSize, setContentSize] =
+    React.useState<ContentMeasurements | null>(null)
+
   if (!context?.isOpen || !context?.position) return null
-  
+
   const position = context.position
 
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -496,15 +495,16 @@ export function DropdownMenuSubContent({
 
     // Calculate available space
     const spaceOnRight = screenWidth - (position.x + position.width)
-    
+
     // Determine horizontal position
-    const left = spaceOnRight >= minWidth 
-      ? position.x + position.width + padding  // Show on right
-      : position.x - minWidth - padding        // Show on left
-    
+    const left =
+      spaceOnRight >= minWidth
+        ? position.x + position.width + padding // Show on right
+        : position.x - minWidth - padding // Show on left
+
     // Calculate vertical position
     let top = position.y
-    
+
     // Adjust if would go off bottom of screen
     if (contentSize && top + contentSize.height > screenHeight - padding) {
       top = screenHeight - contentSize.height - padding
@@ -527,10 +527,7 @@ export function DropdownMenuSubContent({
 
   return (
     <Modal transparent visible={context.isOpen} animationType="none">
-      <Pressable
-        style={{ flex: 1 }}
-        onPress={() => context.setIsOpen(false)}
-      >
+      <Pressable style={{ flex: 1 }} onPress={() => context.setIsOpen(false)}>
         <View
           style={getOptimalDimensions()}
           onLayout={handleLayout}
@@ -540,9 +537,7 @@ export function DropdownMenuSubContent({
           `}
         >
           <Pressable onPress={(e) => e.stopPropagation()}>
-            <View className="p-1">
-              {children}
-            </View>
+            <View className="p-1">{children}</View>
           </Pressable>
         </View>
       </Pressable>

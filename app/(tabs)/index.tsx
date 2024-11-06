@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { ScrollView, Text, View } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
@@ -10,6 +12,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
+  Calendar,
+  DateRange,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -64,7 +68,6 @@ const items = [
 
 const ITEMS_TO_DISPLAY = 3
 
-
 // Add this helper component for color circles
 function ColorCircle({
   gradient,
@@ -105,6 +108,13 @@ function ColorCircle({
 
 export default function DesignSystemShowcase() {
   const { isDark } = useTheme()
+
+  // Single date selection
+  const [date, setDate] = useState<Date>()
+  // Range selection
+  const [dateRange, setDateRange] = useState<DateRange>()
+  // Multiple selection
+  const [dates, setDates] = useState<Date[]>([])
 
   const handleDelete = () => {
     // Handle delete action
@@ -290,61 +300,70 @@ export default function DesignSystemShowcase() {
         </View>
 
         <SectionTitle>Responsive Breadcrumb</SectionTitle>
-<View className="mb-8">
-<Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href={items[0].href}>{items[0].label}</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        
-        {items.length > ITEMS_TO_DISPLAY && (
-          <>
-            <BreadcrumbItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Text>...</Text>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {items.slice(1, -2).map((item, index) => (
-                    <DropdownMenuItem
-                      key={index}
-                      onSelect={() => console.log(`Navigate to ${item.label}`)}
-                    >
-                      <Text>{item.label}</Text>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-          </>
-        )}
-
-        {items.slice(-ITEMS_TO_DISPLAY + 1).map((item, index) => (
-          <BreadcrumbItem key={index}>
-            {item.href ? (
-              <>
-                <BreadcrumbLink href={item.href}>
-                  <Text numberOfLines={1} className="max-w-20 md:max-w-none">
-                    {item.label}
-                  </Text>
+        <View className="mb-8">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href={items[0].href}>
+                  {items[0].label}
                 </BreadcrumbLink>
-                <BreadcrumbSeparator />
-              </>
-            ) : (
-              <BreadcrumbPage>
-                <Text numberOfLines={1} className="max-w-20 md:max-w-none">
-                  {item.label}
-                </Text>
-              </BreadcrumbPage>
-            )}
-          </BreadcrumbItem>
-        ))}
-      </BreadcrumbList>
-    </Breadcrumb>
-</View>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
 
+              {items.length > ITEMS_TO_DISPLAY && (
+                <>
+                  <BreadcrumbItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Text>...</Text>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        {items.slice(1, -2).map((item, index) => (
+                          <DropdownMenuItem
+                            key={index}
+                            onSelect={() =>
+                              console.log(`Navigate to ${item.label}`)
+                            }
+                          >
+                            <Text>{item.label}</Text>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                </>
+              )}
+
+              {items.slice(-ITEMS_TO_DISPLAY + 1).map((item, index) => (
+                <BreadcrumbItem key={index}>
+                  {item.href ? (
+                    <>
+                      <BreadcrumbLink href={item.href}>
+                        <Text
+                          numberOfLines={1}
+                          className="max-w-20 md:max-w-none"
+                        >
+                          {item.label}
+                        </Text>
+                      </BreadcrumbLink>
+                      <BreadcrumbSeparator />
+                    </>
+                  ) : (
+                    <BreadcrumbPage>
+                      <Text
+                        numberOfLines={1}
+                        className="max-w-20 md:max-w-none"
+                      >
+                        {item.label}
+                      </Text>
+                    </BreadcrumbPage>
+                  )}
+                </BreadcrumbItem>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
+        </View>
 
         {/* Sheet Section */}
         <SectionTitle>Sheet</SectionTitle>
@@ -558,6 +577,30 @@ export default function DesignSystemShowcase() {
           </DropdownMenuContent>
         </DropdownMenu>
       </View>
+
+      {/* Calendar Section */}
+      <SectionTitle>Calendar</SectionTitle>
+
+      <SectionTitle>Single Date Selection</SectionTitle>
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={(date) => setDate(date as Date)}
+      />
+
+      <SectionTitle>Range Selection</SectionTitle>
+      <Calendar
+        mode="range"
+        selected={dateRange}
+        onSelect={(range) => setDateRange(range as DateRange)}
+      />
+
+      <SectionTitle>Multiple Selection</SectionTitle>
+      <Calendar
+        mode="multiple"
+        selected={dates}
+        onSelect={(dates) => setDates(dates as Date[])}
+      />
     </ScrollView>
   )
 }
