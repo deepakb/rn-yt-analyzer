@@ -54,6 +54,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Button from '@/components/ui/button'
 import { useTheme } from '@/contexts/ThemeContext'
 
+const items = [
+  { href: '#', label: 'Home' },
+  { href: '#', label: 'Documentation' },
+  { href: '#', label: 'Building Your Application' },
+  { href: '#', label: 'Data Fetching' },
+  { label: 'Caching and Revalidating' },
+]
+
+const ITEMS_TO_DISPLAY = 3
+
+
 // Add this helper component for color circles
 function ColorCircle({
   gradient,
@@ -277,6 +288,63 @@ export default function DesignSystemShowcase() {
             </BreadcrumbList>
           </Breadcrumb>
         </View>
+
+        <SectionTitle>Responsive Breadcrumb</SectionTitle>
+<View className="mb-8">
+<Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href={items[0].href}>{items[0].label}</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        
+        {items.length > ITEMS_TO_DISPLAY && (
+          <>
+            <BreadcrumbItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Text>...</Text>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {items.slice(1, -2).map((item, index) => (
+                    <DropdownMenuItem
+                      key={index}
+                      onSelect={() => console.log(`Navigate to ${item.label}`)}
+                    >
+                      <Text>{item.label}</Text>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+          </>
+        )}
+
+        {items.slice(-ITEMS_TO_DISPLAY + 1).map((item, index) => (
+          <BreadcrumbItem key={index}>
+            {item.href ? (
+              <>
+                <BreadcrumbLink href={item.href}>
+                  <Text numberOfLines={1} className="max-w-20 md:max-w-none">
+                    {item.label}
+                  </Text>
+                </BreadcrumbLink>
+                <BreadcrumbSeparator />
+              </>
+            ) : (
+              <BreadcrumbPage>
+                <Text numberOfLines={1} className="max-w-20 md:max-w-none">
+                  {item.label}
+                </Text>
+              </BreadcrumbPage>
+            )}
+          </BreadcrumbItem>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+</View>
+
 
         {/* Sheet Section */}
         <SectionTitle>Sheet</SectionTitle>
