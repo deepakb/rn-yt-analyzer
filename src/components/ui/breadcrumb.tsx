@@ -7,6 +7,7 @@ import { Link } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 
 import { useTheme } from '@/contexts/ThemeContext'
+import { cn } from "@/lib/utils"
 
 interface BreadcrumbProps extends ViewProps {
   separator?: React.ReactNode
@@ -47,11 +48,11 @@ interface BreadcrumbEllipsisProps {
 }
 
 export const Breadcrumb = React.forwardRef<View, BreadcrumbProps>(
-  ({ separator, className = '', children, ...props }, ref) => {
+  ({ separator, className, children, ...props }, ref) => {
     return (
       <View
         ref={ref}
-        className={`flex-row items-center ${className}`}
+        className={cn("flex-row items-center", className)}
         {...props}
       >
         {children}
@@ -61,14 +62,11 @@ export const Breadcrumb = React.forwardRef<View, BreadcrumbProps>(
 )
 
 export const BreadcrumbList = React.forwardRef<View, BreadcrumbListProps>(
-  ({ className = '', children, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <View
         ref={ref}
-        className={`
-          flex-row flex-wrap items-center gap-x-2
-          ${className}
-        `}
+        className={cn("flex-row flex-wrap items-center gap-x-2", className)}
         {...props}
       >
         {children}
@@ -78,14 +76,11 @@ export const BreadcrumbList = React.forwardRef<View, BreadcrumbListProps>(
 )
 
 export const BreadcrumbItem = React.forwardRef<View, BreadcrumbItemProps>(
-  ({ className = '', children, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <View
         ref={ref}
-        className={`
-          flex-row items-center gap-x-2
-          ${className}
-        `}
+        className={cn("flex-row items-center gap-x-2", className)}
         {...props}
       >
         {children}
@@ -94,55 +89,39 @@ export const BreadcrumbItem = React.forwardRef<View, BreadcrumbItemProps>(
   }
 )
 
-export const BreadcrumbLink = React.forwardRef<
-  TouchableOpacity,
-  BreadcrumbLinkProps
->(({ href, onPress, className = '', children }, ref) => {
-  const { isDark } = useTheme()
-
-  const content = (
-    <TouchableOpacity
-      ref={ref}
-      onPress={onPress}
-      className={`
-          active:opacity-70
-          ${className}
-        `}
-    >
-      <Text
-        className={`
-          text-body-sm font-inter-medium
-          ${isDark ? 'text-text-muted-dark' : 'text-text-muted'}
-        `}
-      >
-        {children}
-      </Text>
-    </TouchableOpacity>
-  )
-
-  if (href) {
+export const BreadcrumbLink = React.forwardRef<TouchableOpacity, BreadcrumbLinkProps>(
+  ({ href, onPress, className, children }, ref) => {
     return (
       <Link href={href as any} asChild>
-        {content}
+        <TouchableOpacity
+          ref={ref}
+          onPress={onPress}
+          className={cn("active:opacity-70", className)}
+        >
+          <Text
+            className={cn(
+              "text-body-sm font-medium",
+              "text-muted-foreground"
+            )}
+          >
+            {children}
+          </Text>
+        </TouchableOpacity>
       </Link>
     )
   }
-
-  return content
-})
+)
 
 export const BreadcrumbPage = React.forwardRef<Text, BreadcrumbPageProps>(
-  ({ className = '', children }, ref) => {
-    const { isDark } = useTheme()
-
+  ({ className, children }, ref) => {
     return (
       <Text
         ref={ref}
-        className={`
-          text-body-sm font-inter-medium
-          ${isDark ? 'text-text-dark' : 'text-text'}
-          ${className}
-        `}
+        className={cn(
+          "text-body-sm font-medium",
+          "text-foreground",
+          className
+        )}
       >
         {children}
       </Text>
@@ -150,49 +129,47 @@ export const BreadcrumbPage = React.forwardRef<Text, BreadcrumbPageProps>(
   }
 )
 
-export const BreadcrumbSeparator = React.forwardRef<
-  View,
-  BreadcrumbSeparatorProps
->(({ children, className = '', ...props }, ref) => {
-  const { isDark } = useTheme()
+export const BreadcrumbSeparator = React.forwardRef<View, BreadcrumbSeparatorProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <View 
+        ref={ref} 
+        className={cn("flex-row items-center", className)} 
+        {...props}
+      >
+        {children || (
+          <Ionicons
+            name="chevron-forward"
+            size={16}
+            className="text-muted-foreground"
+          />
+        )}
+      </View>
+    )
+  }
+)
 
-  return (
-    <View ref={ref} className={`flex-row items-center ${className}`} {...props}>
-      {children || (
+export const BreadcrumbEllipsis = React.forwardRef<TouchableOpacity, BreadcrumbEllipsisProps>(
+  ({ onPress, className }, ref) => {
+    return (
+      <TouchableOpacity
+        ref={ref}
+        onPress={onPress}
+        className={cn(
+          "p-1 rounded-md",
+          "active:bg-muted",
+          className
+        )}
+      >
         <Ionicons
-          name="chevron-forward"
+          name="ellipsis-horizontal"
           size={16}
-          color={isDark ? '#9CA3AF' : '#6B7280'}
+          className="text-muted-foreground"
         />
-      )}
-    </View>
-  )
-})
-
-export const BreadcrumbEllipsis = React.forwardRef<
-  TouchableOpacity,
-  BreadcrumbEllipsisProps
->(({ onPress, className = '' }, ref) => {
-  const { isDark } = useTheme()
-
-  return (
-    <TouchableOpacity
-      ref={ref}
-      onPress={onPress}
-      className={`
-          p-1 rounded-md
-          active:bg-background-subtle dark:active:bg-background-subtle-dark
-          ${className}
-        `}
-    >
-      <Ionicons
-        name="ellipsis-horizontal"
-        size={16}
-        color={isDark ? '#9CA3AF' : '#6B7280'}
-      />
-    </TouchableOpacity>
-  )
-})
+      </TouchableOpacity>
+    )
+  }
+)
 
 // Add display names
 Breadcrumb.displayName = 'Breadcrumb'
