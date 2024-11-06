@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, GradientBackground, GradientPreset, GradientText, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui';
+import { Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, GradientBackground, GradientPreset, GradientText, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui';
 import Button from '@/components/ui/button';
 import { Ionicons } from '@expo/vector-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -334,7 +334,34 @@ export default function DesignSystemShowcase() {
     </Sheet>
   </View>
 
-        
+        {/* Dropdown Menu Section */}
+        <SectionTitle>Dropdown Menu</SectionTitle>
+        <View className="flex-row flex-wrap justify-between mb-8">
+        <DropdownMenu>
+  <DropdownMenuTrigger>
+    <Text>Options</Text>
+  </DropdownMenuTrigger>
+  
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+    <DropdownMenuItem icon="copy-outline" onSelect={() => console.log('Copy')}>
+      Copy
+    </DropdownMenuItem>
+    <DropdownMenuItem icon="share-outline" onSelect={() => console.log('Share')}>
+      Share
+    </DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem 
+      icon="trash-outline" 
+      destructive 
+      onSelect={() => console.log('Delete')}
+    >
+      Delete
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+        </View>
+
       </View>
     </ScrollView>
   );

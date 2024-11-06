@@ -8,3 +8,4 @@ export * from '@/components/ui/alert-dialog';
 export * from '@/components/ui/badge';
 export * from '@/components/ui/breadcrumb';
 export * from '@/components/ui/sheet';
+export * from '@/components/ui/dropdown-menu';
