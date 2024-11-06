@@ -24,10 +24,14 @@ const Alert = React.forwardRef<View, AlertProps>(
     const { isDark } = useTheme()
 
     const variantStyles = {
-      default: 'bg-background-subtle dark:bg-background-subtle-dark border-border dark:border-border-dark',
-      destructive: 'bg-error-50 dark:bg-error-900/20 border-error-200 dark:border-error-800',
-      success: 'bg-success-50 dark:bg-success-900/20 border-success-200 dark:border-success-800',
-      warning: 'bg-warning-50 dark:bg-warning-900/20 border-warning-200 dark:border-warning-800',
+      default:
+        'bg-background-subtle dark:bg-background-subtle-dark border-border dark:border-border-dark',
+      destructive:
+        'bg-error-50 dark:bg-error-900/20 border-error-200 dark:border-error-800',
+      success:
+        'bg-success-50 dark:bg-success-900/20 border-success-200 dark:border-success-800',
+      warning:
+        'bg-warning-50 dark:bg-warning-900/20 border-warning-200 dark:border-warning-800',
     }
 
     const iconColors = {

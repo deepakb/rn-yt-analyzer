@@ -1,72 +1,74 @@
-import * as React from "react"
-import { View, Text } from "react-native"
+import * as React from 'react'
+
+import { Text, View } from 'react-native'
 
 interface CardProps {
   children: React.ReactNode
   className?: string
 }
 
-const Card = React.forwardRef<View, CardProps>(({ className, ...props }, ref) => (
-  <View
-    ref={ref}
-    className={`rounded-lg border border-border bg-card shadow-sm ${className ?? ''}`}
-    {...props}
-  />
-))
-Card.displayName = "Card"
-
-const CardHeader = React.forwardRef<View, CardProps>(({ className, ...props }, ref) => (
-  <View
-    ref={ref}
-    className={`p-6 space-y-1.5 ${className ?? ''}`}
-    {...props}
-  />
-))
-CardHeader.displayName = "CardHeader"
-
-const CardTitle = React.forwardRef<Text, React.ComponentPropsWithoutRef<typeof Text>>(
+const Card = React.forwardRef<View, CardProps>(
   ({ className, ...props }, ref) => (
-    <Text
+    <View
       ref={ref}
-      className={`text-2xl font-semibold leading-none tracking-tight ${className ?? ''}`}
+      className={`rounded-lg border border-border bg-card shadow-sm ${className ?? ''}`}
       {...props}
     />
-))
-CardTitle.displayName = "CardTitle"
+  )
+)
+Card.displayName = 'Card'
 
-const CardDescription = React.forwardRef<Text, React.ComponentPropsWithoutRef<typeof Text>>(
+const CardHeader = React.forwardRef<View, CardProps>(
   ({ className, ...props }, ref) => (
-    <Text
+    <View
       ref={ref}
-      className={`text-sm text-muted-foreground ${className ?? ''}`}
+      className={`p-6 space-y-1.5 ${className ?? ''}`}
       {...props}
     />
-))
-CardDescription.displayName = "CardDescription"
+  )
+)
+CardHeader.displayName = 'CardHeader'
 
-const CardContent = React.forwardRef<View, CardProps>(({ className, ...props }, ref) => (
-  <View
+const CardTitle = React.forwardRef<
+  Text,
+  React.ComponentPropsWithoutRef<typeof Text>
+>(({ className, ...props }, ref) => (
+  <Text
     ref={ref}
-    className={`p-6 pt-0 ${className ?? ''}`}
+    className={`text-2xl font-semibold leading-none tracking-tight ${className ?? ''}`}
     {...props}
   />
 ))
-CardContent.displayName = "CardContent"
+CardTitle.displayName = 'CardTitle'
 
-const CardFooter = React.forwardRef<View, CardProps>(({ className, ...props }, ref) => (
-  <View
+const CardDescription = React.forwardRef<
+  Text,
+  React.ComponentPropsWithoutRef<typeof Text>
+>(({ className, ...props }, ref) => (
+  <Text
     ref={ref}
-    className={`flex flex-row items-center p-6 pt-0 ${className ?? ''}`}
+    className={`text-sm text-muted-foreground ${className ?? ''}`}
     {...props}
   />
 ))
-CardFooter.displayName = "CardFooter"
+CardDescription.displayName = 'CardDescription'
 
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} 
+const CardContent = React.forwardRef<View, CardProps>(
+  ({ className, ...props }, ref) => (
+    <View ref={ref} className={`p-6 pt-0 ${className ?? ''}`} {...props} />
+  )
+)
+CardContent.displayName = 'CardContent'
+
+const CardFooter = React.forwardRef<View, CardProps>(
+  ({ className, ...props }, ref) => (
+    <View
+      ref={ref}
+      className={`flex flex-row items-center p-6 pt-0 ${className ?? ''}`}
+      {...props}
+    />
+  )
+)
+CardFooter.displayName = 'CardFooter'
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }

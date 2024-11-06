@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import { cn } from "@/lib/utils"
+
+import { cn } from '@/lib/utils'
 
 // Context for managing dialog state
 type AlertDialogContext = {
@@ -123,7 +124,7 @@ export function AlertDialogAction({
   return (
     <Pressable
       className={cn(
-        "py-2 px-4 rounded min-w-[80px] items-center bg-primary",
+        'py-2 px-4 rounded min-w-[80px] items-center bg-primary',
         className
       )}
       onPress={handlePress}
@@ -153,7 +154,7 @@ export function AlertDialogCancel({
   return (
     <Pressable
       className={cn(
-        "py-2 px-4 rounded min-w-[80px] items-center bg-secondary",
+        'py-2 px-4 rounded min-w-[80px] items-center bg-secondary',
         className
       )}
       onPress={handlePress}

@@ -2,8 +2,9 @@ import React from 'react'
 
 import { Image, ImageSourcePropType, Text, View } from 'react-native'
 
+import { cn } from '@/lib/utils'
+
 import { GradientBackground } from './gradient-background'
-import { cn } from "@/lib/utils"
 
 interface AvatarRootProps {
   className?: string
@@ -25,7 +26,7 @@ const AvatarRoot = React.forwardRef<View, AvatarRootProps>(
     <View
       ref={ref}
       className={cn(
-        "relative h-10 w-10 shrink-0 overflow-hidden rounded-full",
+        'relative h-10 w-10 shrink-0 overflow-hidden rounded-full',
         className
       )}
     >
@@ -39,7 +40,7 @@ const AvatarImage = React.forwardRef<Image, AvatarImageProps>(
     <Image
       ref={ref}
       source={source}
-      className={cn("aspect-square h-full w-full", className)}
+      className={cn('aspect-square h-full w-full', className)}
       resizeMode="cover"
     />
   )
@@ -50,9 +51,9 @@ const AvatarFallback = React.forwardRef<View, AvatarFallbackProps>(
     <GradientBackground
       ref={ref}
       gradient="primary"
-      className={cn("flex-1 items-center justify-center", className)}
+      className={cn('flex-1 items-center justify-center', className)}
     >
-      <Text className={cn("text-body-sm font-inter-medium text-white")}>
+      <Text className={cn('text-body-sm font-inter-medium text-white')}>
         {initials}
       </Text>
     </GradientBackground>

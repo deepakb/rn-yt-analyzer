@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
 interface ToastActionProps extends TouchableOpacityProps {
@@ -6,11 +7,11 @@ interface ToastActionProps extends TouchableOpacityProps {
   children: React.ReactNode
 }
 
-export function ToastAction({ 
-  altText, 
-  children, 
-  className = "", 
-  ...props 
+export function ToastAction({
+  altText,
+  children,
+  className = '',
+  ...props
 }: ToastActionProps) {
   return (
     <TouchableOpacity
@@ -28,4 +29,4 @@ export function ToastAction({
       </Text>
     </TouchableOpacity>
   )
-} 
+}

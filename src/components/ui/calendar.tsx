@@ -50,21 +50,22 @@ function Calendar({
   )
 
   // Track the hover state for range selection
-  const [rangeSelectionStart, setRangeSelectionStart] = React.useState<Date | null>(null)
+  const [rangeSelectionStart, setRangeSelectionStart] =
+    React.useState<Date | null>(null)
 
   // Helper to check if a date is within a range
   const isDateInRange = (date: Date, range: DateRange): boolean => {
     if (!range.from || !range.to) return false
-    return isWithinInterval(date, { 
-      start: range.from, 
-      end: range.to 
+    return isWithinInterval(date, {
+      start: range.from,
+      end: range.to,
     })
   }
 
   // Helper to check if a date is disabled
   const checkIsDisabled = (date: Date): boolean => {
     if (!disabled) return false
-    
+
     return disabled.some((disabledDate) => {
       if (disabledDate instanceof Date) {
         return isSameDay(disabledDate, date)
@@ -77,26 +78,26 @@ function Calendar({
   // Helper to check if a date is selected
   const isSelected = (date: Date): boolean => {
     if (!selected) return false
-    
+
     if (mode === 'single') {
       return selected instanceof Date && isSameDay(selected, date)
     }
-    
+
     if (mode === 'multiple') {
-      return (selected as Date[]).some(
-        (selectedDate) => isSameDay(selectedDate, date)
+      return (selected as Date[]).some((selectedDate) =>
+        isSameDay(selectedDate, date)
       )
     }
-    
+
     if (mode === 'range') {
       const range = selected as DateRange
       return !!(
-        (range.from && isSameDay(range.from, date)) || 
+        (range.from && isSameDay(range.from, date)) ||
         (range.to && isSameDay(range.to, date)) ||
         (range.from && range.to && isDateInRange(date, range))
       )
     }
-    
+
     return false
   }
 
@@ -123,15 +124,15 @@ function Calendar({
   // Handle date selection
   const handleSelect = (date: Date) => {
     if (!onSelect) return
-    
+
     if (mode === 'single') {
       onSelect(date)
     } else if (mode === 'multiple') {
       const dates = Array.isArray(selected) ? selected : []
-      const isAlreadySelected = dates.some(d => isSameDay(d, date))
-      
+      const isAlreadySelected = dates.some((d) => isSameDay(d, date))
+
       if (isAlreadySelected) {
-        onSelect(dates.filter(d => !isSameDay(d, date)))
+        onSelect(dates.filter((d) => !isSameDay(d, date)))
       } else {
         onSelect([...dates, date])
       }
@@ -282,7 +283,7 @@ function Calendar({
                     w-10 h-10 items-center justify-center
                     ${isStart ? 'rounded-l-md' : ''}
                     ${isEnd ? 'rounded-r-md' : ''}
-                    ${(selected || isStart || isEnd) ? 'bg-primary rounded-md' : ''}
+                    ${selected || isStart || isEnd ? 'bg-primary rounded-md' : ''}
                     ${inRange ? 'bg-primary' : ''}
                     ${isToday && !selected && !inRange ? 'bg-background-subtle dark:bg-background-subtle-dark' : ''}
                     ${isDateDisabled ? 'opacity-50' : ''}
@@ -291,7 +292,7 @@ function Calendar({
                   <Text
                     className={`
                       text-sm font-inter-medium
-                      ${(selected || isStart || isEnd || inRange) ? 'text-white' : ''}
+                      ${selected || isStart || isEnd || inRange ? 'text-white' : ''}
                       ${!selected && !isStart && !isEnd && !inRange && isDark ? 'text-text-dark' : 'text-text'}
                       ${isOutside ? 'opacity-50' : ''}
                     `}

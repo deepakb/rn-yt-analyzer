@@ -1,12 +1,13 @@
-import * as React from "react"
-import { 
-  Pressable, 
-  View, 
-  Animated, 
-  ViewStyle, 
+import * as React from 'react'
+
+import {
+  Animated,
+  LayoutChangeEvent,
+  Pressable,
   StyleSheet,
-  LayoutChangeEvent 
-} from "react-native"
+  View,
+  ViewStyle,
+} from 'react-native'
 
 interface SwitchProps {
   value: boolean
@@ -45,11 +46,13 @@ const Switch = React.forwardRef<View, SwitchProps>(
         onPress={() => !disabled && onValueChange(!value)}
         style={[styles.pressable, style]}
         className={[
-          "h-6 w-11 rounded-full border-2 border-transparent",
-          value ? "bg-primary" : "bg-input",
-          disabled && "opacity-50",
-          className
-        ].filter(Boolean).join(" ")}
+          'h-6 w-11 rounded-full border-2 border-transparent',
+          value ? 'bg-primary' : 'bg-input',
+          disabled && 'opacity-50',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         onLayout={onTrackLayout}
         {...props}
       >
@@ -61,9 +64,9 @@ const Switch = React.forwardRef<View, SwitchProps>(
             },
           ]}
           className={[
-            "h-5 w-5 rounded-full bg-background shadow-lg",
-            value ? "bg-white" : "bg-muted"
-          ].join(" ")}
+            'h-5 w-5 rounded-full bg-background shadow-lg',
+            value ? 'bg-white' : 'bg-muted',
+          ].join(' ')}
         />
       </Pressable>
     )
@@ -72,12 +75,12 @@ const Switch = React.forwardRef<View, SwitchProps>(
 
 const styles = StyleSheet.create({
   pressable: {
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 2,
   },
   thumb: {
-    position: "absolute",
-    shadowColor: "#000",
+    position: 'absolute',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -88,6 +91,6 @@ const styles = StyleSheet.create({
   },
 })
 
-Switch.displayName = "Switch"
+Switch.displayName = 'Switch'
 
-export { Switch } 
+export { Switch }

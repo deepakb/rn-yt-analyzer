@@ -1,12 +1,13 @@
-import * as React from "react"
-import { Platform } from "react-native"
+import * as React from 'react'
+
+import { Platform } from 'react-native'
 
 export type ToastProps = {
   id: string
   title?: string
   description?: string
   duration?: number
-  variant?: "default" | "destructive" | "success"
+  variant?: 'default' | 'destructive' | 'success'
   action?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -20,17 +21,17 @@ type ToasterToast = ToastProps & {
 }
 
 type ActionType = {
-  ADD_TOAST: "ADD_TOAST"
-  UPDATE_TOAST: "UPDATE_TOAST"
-  DISMISS_TOAST: "DISMISS_TOAST"
-  REMOVE_TOAST: "REMOVE_TOAST"
+  ADD_TOAST: 'ADD_TOAST'
+  UPDATE_TOAST: 'UPDATE_TOAST'
+  DISMISS_TOAST: 'DISMISS_TOAST'
+  REMOVE_TOAST: 'REMOVE_TOAST'
 }
 
 const actionTypes: ActionType = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
+  ADD_TOAST: 'ADD_TOAST',
+  UPDATE_TOAST: 'UPDATE_TOAST',
+  DISMISS_TOAST: 'DISMISS_TOAST',
+  REMOVE_TOAST: 'REMOVE_TOAST',
 }
 
 let count = 0
@@ -42,20 +43,20 @@ function genId() {
 
 type Action =
   | {
-      type: ActionType["ADD_TOAST"]
+      type: ActionType['ADD_TOAST']
       toast: ToasterToast
     }
   | {
-      type: ActionType["UPDATE_TOAST"]
+      type: ActionType['UPDATE_TOAST']
       toast: Partial<ToasterToast>
     }
   | {
-      type: ActionType["DISMISS_TOAST"]
-      toastId?: ToasterToast["id"]
+      type: ActionType['DISMISS_TOAST']
+      toastId?: ToasterToast['id']
     }
   | {
-      type: ActionType["REMOVE_TOAST"]
-      toastId?: ToasterToast["id"]
+      type: ActionType['REMOVE_TOAST']
+      toastId?: ToasterToast['id']
     }
 
 interface State {
@@ -72,7 +73,7 @@ const addToRemoveQueue = (toastId: string) => {
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId)
     dispatch({
-      type: "REMOVE_TOAST",
+      type: 'REMOVE_TOAST',
       toastId: toastId,
     })
   }, TOAST_REMOVE_DELAY)
@@ -82,13 +83,13 @@ const addToRemoveQueue = (toastId: string) => {
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "ADD_TOAST":
+    case 'ADD_TOAST':
       return {
         ...state,
         toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
       }
 
-    case "UPDATE_TOAST":
+    case 'UPDATE_TOAST':
       return {
         ...state,
         toasts: state.toasts.map((t) =>
@@ -96,7 +97,7 @@ const reducer = (state: State, action: Action): State => {
         ),
       }
 
-    case "DISMISS_TOAST": {
+    case 'DISMISS_TOAST': {
       const { toastId } = action
 
       if (toastId) {
@@ -119,7 +120,7 @@ const reducer = (state: State, action: Action): State => {
         ),
       }
     }
-    case "REMOVE_TOAST":
+    case 'REMOVE_TOAST':
       if (action.toastId === undefined) {
         return {
           ...state,
@@ -144,15 +145,15 @@ function dispatch(action: Action) {
   })
 }
 
-type Toast = Omit<ToastProps, "id">
+type Toast = Omit<ToastProps, 'id'>
 
 function toast({ ...props }: Toast) {
   const id = genId()
-  
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
-  
+
+  const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id })
+
   dispatch({
-    type: "ADD_TOAST",
+    type: 'ADD_TOAST',
     toast: {
       ...props,
       id,
@@ -176,7 +177,7 @@ function toast({ ...props }: Toast) {
     dismiss,
     update: (props: ToasterToast) =>
       dispatch({
-        type: "UPDATE_TOAST",
+        type: 'UPDATE_TOAST',
         toast: { ...props, id },
       }),
   }
@@ -199,6 +200,6 @@ export function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+    dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
   }
-} 
+}

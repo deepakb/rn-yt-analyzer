@@ -4,38 +4,15 @@ import { ScrollView, Text, View } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 
-import { Badge } from '@/components/ui/badge'
-import { 
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator 
-} from '@/components/ui/breadcrumb'
-import { Calendar } from '@/components/ui/calendar'
-import { type DateRange } from '@/components/ui/calendar'
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger 
-} from '@/components/ui/dropdown-menu'
-import { 
+import { CardDemo } from '@/components/CardDemo'
+import {
   Checkbox,
   GradientBackground,
   type GradientPreset,
-  GradientText, 
-  Label
+  GradientText,
+  Label,
 } from '@/components/ui'
-import { 
+import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -63,11 +40,34 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import Button from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { type DateRange } from '@/components/ui/calendar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ToastAction } from '@/components/ui/toast-action'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useToast } from '@/hooks/use-toast'
-import { ToastAction } from '@/components/ui/toast-action'
-import { CardDemo } from '@/components/CardDemo'
 
 const items = [
   { href: '#', label: 'Home' },
@@ -120,7 +120,7 @@ function ColorCircle({
 export default function DesignSystemShowcase() {
   const { isDark } = useTheme()
   const { toast } = useToast()
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false)
 
   // Single date selection
   const [date, setDate] = useState<Date>()
@@ -138,10 +138,10 @@ export default function DesignSystemShowcase() {
   const showToast = () => {
     console.log('Showing toast...') // Debug log
     toast({
-      title: "Test Toast",
-      description: "This is a test toast message",
+      title: 'Test Toast',
+      description: 'This is a test toast message',
       duration: 3000,
-      variant: "default",
+      variant: 'default',
     })
   }
 
@@ -152,20 +152,16 @@ export default function DesignSystemShowcase() {
       showsVerticalScrollIndicator={true}
     >
       <View className="px-4 py-6">
-
         {/* Label and checkbox Section */}
         <SectionTitle>Label and Checkbox</SectionTitle>
         <View className="flex-row items-center flex-wrap mb-8">
-        <Checkbox 
-    checked={checked} 
-    onCheckedChange={setChecked}
-  />
+          <Checkbox checked={checked} onCheckedChange={setChecked} />
           <Label>Label</Label>
         </View>
 
-      <View className="flex-1 items-center justify-center p-4">
-        <CardDemo />
-      </View>
+        <View className="flex-1 items-center justify-center p-4">
+          <CardDemo />
+        </View>
         {/* Typography Section */}
         <SectionTitle>Typography</SectionTitle>
         <View className="space-y-4 mb-8">
@@ -212,10 +208,18 @@ export default function DesignSystemShowcase() {
 
         {/* Button Section */}
         <SectionTitle>Button</SectionTitle>
-        <View className="flex-row flex-wrap justify-between mb-8">
+        <View className="space-y-4 mb-8">
           <Button variant="destructive">
             <Ionicons name={'mail'} size={20} color="white" />
-            Login with Email
+            <Text className="text-white">Login with Email</Text>
+          </Button>
+
+          <Button onPress={() => console.log('pressed')} variant="default">
+            <Text className="text-white">Click me</Text>
+          </Button>
+
+          <Button href="/settings" variant="outline">
+            <Text>Settings</Text>
           </Button>
         </View>
 
@@ -623,12 +627,12 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Scheduled: Catch up",
-                description: "Friday, February 10, 2023 at 5:57 PM",
+                title: 'Scheduled: Catch up',
+                description: 'Friday, February 10, 2023 at 5:57 PM',
                 action: (
-                  <ToastAction 
+                  <ToastAction
                     altText="Goto schedule to undo"
-                    onPress={() => console.log("Undo pressed")}
+                    onPress={() => console.log('Undo pressed')}
                   >
                     Undo
                   </ToastAction>
@@ -636,7 +640,9 @@ export default function DesignSystemShowcase() {
               })
             }}
           >
-            <Text className="text-text dark:text-text-dark">Default Toast with Action</Text>
+            <Text className="text-text dark:text-text-dark">
+              Default Toast with Action
+            </Text>
           </Button>
 
           {/* Success Toast */}
@@ -644,13 +650,13 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Success!",
-                description: "Your changes have been saved successfully.",
-                variant: "success",
+                title: 'Success!',
+                description: 'Your changes have been saved successfully.',
+                variant: 'success',
                 action: (
-                  <ToastAction 
+                  <ToastAction
                     altText="Dismiss message"
-                    onPress={() => console.log("Dismissed")}
+                    onPress={() => console.log('Dismissed')}
                   >
                     Dismiss
                   </ToastAction>
@@ -666,13 +672,13 @@ export default function DesignSystemShowcase() {
             variant="destructive"
             onPress={() => {
               toast({
-                title: "Error",
-                description: "Something went wrong. Please try again later.",
-                variant: "destructive",
+                title: 'Error',
+                description: 'Something went wrong. Please try again later.',
+                variant: 'destructive',
                 action: (
-                  <ToastAction 
+                  <ToastAction
                     altText="Try again"
-                    onPress={() => console.log("Retry")}
+                    onPress={() => console.log('Retry')}
                   >
                     Retry
                   </ToastAction>
@@ -688,13 +694,14 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Download Started",
-                description: "Your file is being downloaded. This might take a while.",
+                title: 'Download Started',
+                description:
+                  'Your file is being downloaded. This might take a while.',
                 duration: 10000, // 10 seconds
                 action: (
-                  <ToastAction 
+                  <ToastAction
                     altText="Cancel download"
-                    onPress={() => console.log("Download cancelled")}
+                    onPress={() => console.log('Download cancelled')}
                   >
                     Cancel
                   </ToastAction>
@@ -702,7 +709,9 @@ export default function DesignSystemShowcase() {
               })
             }}
           >
-            <Text className="text-text dark:text-text-dark">Long Duration Toast</Text>
+            <Text className="text-text dark:text-text-dark">
+              Long Duration Toast
+            </Text>
           </Button>
 
           {/* Simple Toast without Action */}
@@ -710,8 +719,9 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Note",
-                description: "This is a simple notification without any action.",
+                title: 'Note',
+                description:
+                  'This is a simple notification without any action.',
                 duration: 3000,
               })
             }}
@@ -724,12 +734,14 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Copied to clipboard",
+                title: 'Copied to clipboard',
                 duration: 2000,
               })
             }}
           >
-            <Text className="text-text dark:text-text-dark">Title-only Toast</Text>
+            <Text className="text-text dark:text-text-dark">
+              Title-only Toast
+            </Text>
           </Button>
 
           {/* Description-only Toast */}
@@ -737,12 +749,14 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                description: "Your session will expire in 5 minutes.",
+                description: 'Your session will expire in 5 minutes.',
                 duration: 5000,
               })
             }}
           >
-            <Text className="text-text dark:text-text-dark">Description-only Toast</Text>
+            <Text className="text-text dark:text-text-dark">
+              Description-only Toast
+            </Text>
           </Button>
 
           {/* Multiple Action Toast */}
@@ -750,20 +764,21 @@ export default function DesignSystemShowcase() {
             variant="outline"
             onPress={() => {
               toast({
-                title: "Update Available",
-                description: "A new version is available. Would you like to update now?",
+                title: 'Update Available',
+                description:
+                  'A new version is available. Would you like to update now?',
                 duration: 8000,
                 action: (
                   <View className="flex-row space-x-2">
-                    <ToastAction 
+                    <ToastAction
                       altText="Update now"
-                      onPress={() => console.log("Update now")}
+                      onPress={() => console.log('Update now')}
                     >
                       Update
                     </ToastAction>
-                    <ToastAction 
+                    <ToastAction
                       altText="Update later"
-                      onPress={() => console.log("Update later")}
+                      onPress={() => console.log('Update later')}
                     >
                       Later
                     </ToastAction>
@@ -772,7 +787,9 @@ export default function DesignSystemShowcase() {
               })
             }}
           >
-            <Text className="text-text dark:text-text-dark">Multiple Actions Toast</Text>
+            <Text className="text-text dark:text-text-dark">
+              Multiple Actions Toast
+            </Text>
           </Button>
         </View>
       </View>

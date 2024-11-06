@@ -9,10 +9,10 @@ import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 import { Header } from '@/components/Header'
+import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useLoadFonts } from '@/hooks/useLoadFonts'
-import { Toaster } from '@/components/ui/toaster'
 
 import '../global.css'
 
@@ -60,9 +60,7 @@ export default function RootLayout() {
           screenOptions={{
             header: () => (
               <Header
-                onNotificationPress={() =>
-                  console.log('Notification pressed')
-                }
+                onNotificationPress={() => console.log('Notification pressed')}
               />
             ),
             headerShown: true,

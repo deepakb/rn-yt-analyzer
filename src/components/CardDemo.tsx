@@ -1,7 +1,10 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import { Text, View } from 'react-native'
+
 import { Ionicons } from '@expo/vector-icons'
 
+import Button from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -11,20 +14,19 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
-import Button from '@/components/ui/button'
 
 const notifications = [
   {
-    title: "Your call has been confirmed.",
-    description: "1 hour ago",
+    title: 'Your call has been confirmed.',
+    description: '1 hour ago',
   },
   {
-    title: "You have a new message!",
-    description: "1 hour ago",
+    title: 'You have a new message!',
+    description: '1 hour ago',
   },
   {
-    title: "Your subscription is expiring soon!",
-    description: "2 hours ago",
+    title: 'Your subscription is expiring soon!',
+    description: '2 hours ago',
   },
 ]
 
@@ -55,19 +57,13 @@ export function CardDemo({ style, ...props }: CardDemoProps) {
                 Send notifications to device.
               </Text>
             </View>
-            <Switch
-              value={isEnabled}
-              onValueChange={setIsEnabled}
-            />
+            <Switch value={isEnabled} onValueChange={setIsEnabled} />
           </View>
 
           {/* Notifications List */}
           <View className="space-y-4">
             {notifications.map((notification, index) => (
-              <View
-                key={index}
-                className="flex-row space-x-3 pb-4 last:pb-0"
-              >
+              <View key={index} className="flex-row space-x-3 pb-4 last:pb-0">
                 <View className="mt-2">
                   <View className="h-2 w-2 rounded-full bg-sky-500" />
                 </View>
@@ -86,7 +82,7 @@ export function CardDemo({ style, ...props }: CardDemoProps) {
       </CardContent>
 
       <CardFooter>
-        <Button 
+        <Button
           variant="default"
           className="w-full flex-row items-center justify-center space-x-2"
           onPress={() => console.log('Marked all as read')}
@@ -97,4 +93,4 @@ export function CardDemo({ style, ...props }: CardDemoProps) {
       </CardFooter>
     </Card>
   )
-} 
+}

@@ -1,7 +1,8 @@
-import { View, StyleSheet } from "react-native"
+import { StyleSheet, View } from 'react-native'
 
-import { useToast } from "@/hooks/use-toast"
-import { Toast } from "./toast"
+import { useToast } from '@/hooks/use-toast'
+
+import { Toast } from './toast'
 
 export function Toaster() {
   const { toasts } = useToast()
@@ -25,4 +26,4 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
     zIndex: 999,
   },
-}) 
+})
