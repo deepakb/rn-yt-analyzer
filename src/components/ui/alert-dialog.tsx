@@ -30,6 +30,7 @@ export function AlertDialog({ children }: { children: React.ReactNode }) {
     </AlertDialogContext.Provider>
   )
 }
+AlertDialog.displayName = 'AlertDialog'
 
 // Trigger component
 export function AlertDialogTrigger({
@@ -44,6 +45,7 @@ export function AlertDialogTrigger({
 
   return <Pressable onPress={() => context.setOpen(true)}>{children}</Pressable>
 }
+AlertDialogTrigger.displayName = 'AlertDialogTrigger'
 
 // Content component
 export function AlertDialogContent({
@@ -79,16 +81,19 @@ export function AlertDialogContent({
     </Modal>
   )
 }
+AlertDialogContent.displayName = 'AlertDialogContent'
 
 // Header component
 export function AlertDialogHeader({ children }: { children: React.ReactNode }) {
   return <View className="mb-4">{children}</View>
 }
+AlertDialogHeader.displayName = 'AlertDialogHeader'
 
 // Title component
 export function AlertDialogTitle({ children }: { children: React.ReactNode }) {
   return <Text className="text-lg font-semibold mb-2">{children}</Text>
 }
+AlertDialogTitle.displayName = 'AlertDialogTitle'
 
 // Description component
 export function AlertDialogDescription({
@@ -98,11 +103,13 @@ export function AlertDialogDescription({
 }) {
   return <Text className="text-sm text-gray-500 leading-5">{children}</Text>
 }
+AlertDialogDescription.displayName = 'AlertDialogDescription'
 
 // Footer component
 export function AlertDialogFooter({ children }: { children: React.ReactNode }) {
   return <View className="mt-6 flex-row justify-end gap-2">{children}</View>
 }
+AlertDialogFooter.displayName = 'AlertDialogFooter'
 
 // Action button component
 export function AlertDialogAction({
@@ -133,6 +140,7 @@ export function AlertDialogAction({
     </Pressable>
   )
 }
+AlertDialogAction.displayName = 'AlertDialogAction'
 
 // Cancel button component
 export function AlertDialogCancel({
@@ -163,3 +171,4 @@ export function AlertDialogCancel({
     </Pressable>
   )
 }
+AlertDialogCancel.displayName = 'AlertDialogCancel'
