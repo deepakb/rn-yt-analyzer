@@ -61,6 +61,19 @@ function Calendar({
     })
   }
 
+  // Helper to check if a date is disabled
+  const checkIsDisabled = (date: Date): boolean => {
+    if (!disabled) return false
+    
+    return disabled.some((disabledDate) => {
+      if (disabledDate instanceof Date) {
+        return isSameDay(disabledDate, date)
+      }
+      // Check if date is within disabled range
+      return isDateInRange(date, disabledDate as DateRange)
+    })
+  }
+
   // Helper to check if a date is selected
   const isSelected = (date: Date): boolean => {
     if (!selected) return false
@@ -77,7 +90,7 @@ function Calendar({
     
     if (mode === 'range') {
       const range = selected as DateRange
-      return (
+      return !!(
         (range.from && isSameDay(range.from, date)) || 
         (range.to && isSameDay(range.to, date)) ||
         (range.from && range.to && isDateInRange(date, range))
@@ -85,6 +98,13 @@ function Calendar({
     }
     
     return false
+  }
+
+  // Helper to check if a date is in the selected range
+  const isInSelectedRange = (date: Date): boolean => {
+    if (mode !== 'range' || !selected) return false
+    const range = selected as DateRange
+    return !!(range.from && range.to && isDateInRange(date, range))
   }
 
   // Helper to check if a date is the start or end of a range
@@ -248,31 +268,31 @@ function Calendar({
 
               const isToday = isSameDay(date, new Date())
               const selected = isSelected(date)
-              const inRange = mode === 'range' && isDateInRange(date, selected as DateRange)
+              const inRange = isInSelectedRange(date)
               const isStart = isRangeStart(date)
               const isEnd = isRangeEnd(date)
-              const disabled = isDisabled(date)
+              const isDateDisabled = checkIsDisabled(date)
 
               return (
                 <TouchableOpacity
                   key={dayIndex}
-                  onPress={() => !disabled && handleSelect(date)}
-                  disabled={disabled}
+                  onPress={() => !isDateDisabled && handleSelect(date)}
+                  disabled={isDateDisabled}
                   className={`
                     w-10 h-10 items-center justify-center
                     ${isStart ? 'rounded-l-md' : ''}
                     ${isEnd ? 'rounded-r-md' : ''}
                     ${(selected || isStart || isEnd) ? 'bg-primary rounded-md' : ''}
-                    ${inRange ? 'bg-primary/20' : ''}
-                    ${isToday && !selected ? 'bg-background-subtle dark:bg-background-subtle-dark' : ''}
-                    ${disabled ? 'opacity-50' : ''}
+                    ${inRange ? 'bg-primary' : ''}
+                    ${isToday && !selected && !inRange ? 'bg-background-subtle dark:bg-background-subtle-dark' : ''}
+                    ${isDateDisabled ? 'opacity-50' : ''}
                   `}
                 >
                   <Text
                     className={`
                       text-sm font-inter-medium
-                      ${(selected || isStart || isEnd) ? 'text-white' : ''}
-                      ${!selected && !isStart && !isEnd && isDark ? 'text-text-dark' : 'text-text'}
+                      ${(selected || isStart || isEnd || inRange) ? 'text-white' : ''}
+                      ${!selected && !isStart && !isEnd && !inRange && isDark ? 'text-text-dark' : 'text-text'}
                       ${isOutside ? 'opacity-50' : ''}
                     `}
                   >
